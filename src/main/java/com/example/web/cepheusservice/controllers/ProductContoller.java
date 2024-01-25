@@ -38,7 +38,7 @@ public class ProductContoller {
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         ProductEntity productEntity = productMapper.mapFrom(productDto);
 
-//        Находим категорию по id и устанавливаем её для продукта
+//        Находим категорию по id и устанавливаем её для товара
         CategoryEntity categoryEntity = categoryService.findById(productDto.getCategoryDto());
         productEntity.setCategoryEntity(categoryEntity);
 

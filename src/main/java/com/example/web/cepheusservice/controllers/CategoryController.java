@@ -31,4 +31,7 @@ public class CategoryController {
         CategoryEntity savedCategoryEntity = categoryService.save(categoryEntity);
         return new ResponseEntity<>(categoryMapper.mapTo(savedCategoryEntity), HttpStatus.CREATED);
     }
+
+//    Отображение всех категорий
+
 }
