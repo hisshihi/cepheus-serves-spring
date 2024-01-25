@@ -14,6 +14,8 @@ public class ProductDto {
     private Long id;
     private String title;
     private String text;
+    private Integer price;
+    private String category;
     private String img;
 
 }
