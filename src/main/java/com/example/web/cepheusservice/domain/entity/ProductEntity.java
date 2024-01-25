@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "product")
 public class ProductEntity {
 
@@ -23,8 +25,9 @@ public class ProductEntity {
     private String text;
     @Column(name = "price", nullable = false)
     private Integer price;
-    @Column(name = "category", nullable = false)
-    private String category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private CategoryEntity categoryEntity;
     @Column(name = "img", nullable = false)
     private String img;
 

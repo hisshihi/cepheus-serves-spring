@@ -1,8 +1,12 @@
 package com.example.web.cepheusservice.controllers;
 
 import com.example.web.cepheusservice.domain.dto.ProductDto;
+import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
+import com.example.web.cepheusservice.mappers.Mapper;
 import com.example.web.cepheusservice.mappers.impl.ProductMapper;
+import com.example.web.cepheusservice.repositories.CategoryRepository;
+import com.example.web.cepheusservice.services.CategoryService;
 import com.example.web.cepheusservice.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,18 +22,26 @@ import java.util.stream.StreamSupport;
 @RestController
 public class ProductContoller {
 
-    private ProductMapper productMapper;
+    private Mapper<ProductEntity, ProductDto> productMapper;
     private ProductService productService;
+    private CategoryService categoryService;
 
-    public ProductContoller(ProductMapper productMapper, ProductService productService) {
+
+    public ProductContoller(Mapper<ProductEntity, ProductDto> productMapper, ProductService productService, CategoryService categoryService) {
         this.productMapper = productMapper;
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     //    Создание нового товара
     @PostMapping(path = "/products")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         ProductEntity productEntity = productMapper.mapFrom(productDto);
+
+//        Находим категорию по id и устанавливаем её для продукта
+        CategoryEntity categoryEntity = categoryService.findById(productDto.getCategoryDto());
+        productEntity.setCategoryEntity(categoryEntity);
+
         ProductEntity savedProductEntity = productService.save(productEntity);
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.CREATED);
     }
