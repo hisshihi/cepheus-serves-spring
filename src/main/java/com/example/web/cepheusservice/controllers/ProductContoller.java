@@ -8,12 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -41,6 +39,29 @@ public class ProductContoller {
     public Page<ProductDto> listProducts(Pageable pageable) {
         Page<ProductEntity> products = productService.findAll(pageable);
         return products.map(productMapper::mapTo);
+    }
+
+//    Поиск товара по id
+    @GetMapping(path = "/products/{id}")
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
+        Optional<ProductEntity> foundProduct = productService.findById(id);
+        return foundProduct.map(productEntity -> {
+            ProductDto foundProductDto = productMapper.mapTo(productEntity);
+            return new ResponseEntity<>(foundProductDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+//    Полное обновление товара
+    @PutMapping(path = "/products/{id}")
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
+        if (!productService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        productDto.setId(id);
+        ProductEntity productEntity = productMapper.mapFrom(productDto);
+        ProductEntity savedProductEntity = productService.save(productEntity);
+        return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
+
     }
 
 }

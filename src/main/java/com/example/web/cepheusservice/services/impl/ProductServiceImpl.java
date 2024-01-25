@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,6 +29,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductEntity> findAll(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public boolean isExists(Long id) {
+        return productRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<ProductEntity> findById(Long id) {
+        return productRepository.findById(id);
     }
 
 }
