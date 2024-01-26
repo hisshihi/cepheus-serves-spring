@@ -34,5 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
         return StreamSupport.stream(categoryRepository.findAll().spliterator(),false).collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(Long id) {
+        categoryRepository.deleteById(id);
+    }
+
 
 }

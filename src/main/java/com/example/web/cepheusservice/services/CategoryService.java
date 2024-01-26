@@ -12,4 +12,6 @@ public interface CategoryService {
 
 
     List<CategoryEntity> findALl();
+
+    void delete(Long id);
 }

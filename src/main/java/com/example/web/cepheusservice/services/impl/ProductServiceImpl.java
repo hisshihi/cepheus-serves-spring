@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -60,6 +63,11 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(productEntity);
 
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProductEntity> findAllList() {
+        return StreamSupport.stream(productRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
 
