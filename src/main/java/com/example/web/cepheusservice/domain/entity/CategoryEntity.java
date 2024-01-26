@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.domain.entity;
 
+import com.example.web.cepheusservice.domain.dto.CategoryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -76,4 +76,16 @@ public class ProductContoller {
 
     }
 
+//    Частичное обновление товара
+    @PatchMapping(path = "/products/{id}")
+    public ResponseEntity<ProductDto> variableUpdateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
+        if (!productService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        ProductEntity productEntity = productMapper.mapFrom(productDto);
+        ProductEntity savedProductEntity = productService.variableUpdate(id, productEntity);
+        return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
+    }
+
 }

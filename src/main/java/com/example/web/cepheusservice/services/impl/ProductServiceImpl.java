@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.services.impl;
 
+import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.services.ProductService;
@@ -7,10 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -40,5 +38,20 @@ public class ProductServiceImpl implements ProductService {
     public Optional<ProductEntity> findById(Long id) {
         return productRepository.findById(id);
     }
+
+    @Override
+    public ProductEntity variableUpdate(Long id, ProductEntity productEntity) {
+        productEntity.setId(id);
+
+        return productRepository.findById(id).map(existingProduct -> {
+            Optional.ofNullable(productEntity.getTitle()).ifPresent(existingProduct::setTitle);
+            Optional.ofNullable(productEntity.getText()).ifPresent(existingProduct::setText);
+            Optional.ofNullable(productEntity.getPrice()).ifPresent(existingProduct::setPrice);
+            Optional.ofNullable(productEntity.getCategoryEntity()).ifPresent(existingProduct::setCategoryEntity);
+            Optional.ofNullable(productEntity.getImg()).ifPresent(existingProduct::setImg);
+            return productRepository.save(existingProduct);
+        }).orElseThrow(() -> new RuntimeException("Продкут не существует"));
+    }
+
 
 }
