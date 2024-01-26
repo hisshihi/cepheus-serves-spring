@@ -34,7 +34,7 @@ public class ProductContoller {
     }
 
     //    Создание нового товара
-    @PostMapping(path = "/products")
+    @PostMapping(path = "products")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         ProductEntity productEntity = productMapper.mapFrom(productDto);
 
@@ -47,14 +47,14 @@ public class ProductContoller {
     }
 
 //    Отображение всех товаров
-    @GetMapping(path = "/products")
+    @GetMapping(path = "products")
     public Page<ProductDto> listProducts(Pageable pageable) {
         Page<ProductEntity> products = productService.findAll(pageable);
         return products.map(productMapper::mapTo);
     }
 
 //    Поиск товара по id
-    @GetMapping(path = "/products/{id}")
+    @GetMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
         Optional<ProductEntity> foundProduct = productService.findById(id);
         return foundProduct.map(productEntity -> {
@@ -64,7 +64,7 @@ public class ProductContoller {
     }
 
 //    Полное обновление товара
-    @PutMapping(path = "/products/{id}")
+    @PutMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
         if (!productService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,7 +77,7 @@ public class ProductContoller {
     }
 
 //    Частичное обновление товара
-    @PatchMapping(path = "/products/{id}")
+    @PatchMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> variableUpdateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
         if (!productService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,6 +86,15 @@ public class ProductContoller {
         ProductEntity productEntity = productMapper.mapFrom(productDto);
         ProductEntity savedProductEntity = productService.variableUpdate(id, productEntity);
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
+    }
+
+//    Удаление товара
+    @DeleteMapping(path = "products/{id}")
+    public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
+
+
+        productService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

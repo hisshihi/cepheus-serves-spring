@@ -18,4 +18,6 @@ public interface ProductService {
     Optional<ProductEntity> findById(Long id);
 
     ProductEntity variableUpdate(Long id, ProductEntity productEntity);
+
+    void delete(Long id);
 }

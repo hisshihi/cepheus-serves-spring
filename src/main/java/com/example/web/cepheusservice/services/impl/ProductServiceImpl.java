@@ -53,5 +53,14 @@ public class ProductServiceImpl implements ProductService {
         }).orElseThrow(() -> new RuntimeException("Продкут не существует"));
     }
 
+    @Override
+    public void delete(Long id) {
+        ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Товар не найден"));
+        productEntity.setCategoryEntity(null);
+        productRepository.save(productEntity);
+
+        productRepository.deleteById(id);
+    }
+
 
 }
