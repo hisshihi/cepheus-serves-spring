@@ -1,9 +1,15 @@
 package com.example.web.cepheusservice.domain.dto;
 
+import com.example.web.cepheusservice.domain.entity.ProductImageEntity;
+import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +22,15 @@ public class ProductDto {
     private String text;
     private Integer price;
     private CategoryDto categoryDto;
-    private String img;
+
+    private ProductImageDto productImageDto;
+    //    Создаём новое поле, чтобы указывать изображение для превью
+    private Long previewImageId;
+    private LocalDateTime dateTime;
+
+    @PrePersist
+    private void init() {
+        dateTime = LocalDateTime.now();
+    }
 
 }

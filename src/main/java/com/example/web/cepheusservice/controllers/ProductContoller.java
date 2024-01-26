@@ -4,8 +4,6 @@ import com.example.web.cepheusservice.domain.dto.ProductDto;
 import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.mappers.Mapper;
-import com.example.web.cepheusservice.mappers.impl.ProductMapper;
-import com.example.web.cepheusservice.repositories.CategoryRepository;
 import com.example.web.cepheusservice.services.CategoryService;
 import com.example.web.cepheusservice.services.ProductService;
 import org.springframework.data.domain.Page;
@@ -13,11 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 public class ProductContoller {
@@ -35,25 +34,33 @@ public class ProductContoller {
 
     //    Создание нового товара
     @PostMapping(path = "products")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) throws IOException {
+        System.out.println(productDto);
         ProductEntity productEntity = productMapper.mapFrom(productDto);
 
 //        Находим категорию по id и устанавливаем её для товара
         CategoryEntity categoryEntity = categoryService.findById(productDto.getCategoryDto());
         productEntity.setCategoryEntity(categoryEntity);
 
+
         ProductEntity savedProductEntity = productService.save(productEntity);
+
+//        Сохраняем файл
+//        String fileName = multipartFile.getOriginalFilename();
+//        Path filePath = Paths.get("uploads", fileName);
+//        multipartFile.transferTo(filePath);
+
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.CREATED);
     }
 
-//    Отображение всех товаров
+    //    Отображение всех товаров
     @GetMapping(path = "products")
     public Page<ProductDto> listProducts(Pageable pageable) {
         Page<ProductEntity> products = productService.findAll(pageable);
         return products.map(productMapper::mapTo);
     }
 
-//    Поиск товара по id
+    //    Поиск товара по id
     @GetMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
         Optional<ProductEntity> foundProduct = productService.findById(id);
@@ -63,7 +70,7 @@ public class ProductContoller {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-//    Полное обновление товара
+    //    Полное обновление товара
     @PutMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
         if (!productService.isExists(id)) {
@@ -76,7 +83,7 @@ public class ProductContoller {
 
     }
 
-//    Частичное обновление товара
+    //    Частичное обновление товара
     @PatchMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> variableUpdateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
         if (!productService.isExists(id)) {
@@ -88,7 +95,7 @@ public class ProductContoller {
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
     }
 
-//    Удаление товара
+    //    Удаление товара
     @DeleteMapping(path = "products/{id}")
     public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
 

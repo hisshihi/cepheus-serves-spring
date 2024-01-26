@@ -6,8 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDateTime;
+
 
 @Data
 @AllArgsConstructor
@@ -30,7 +31,17 @@ public class ProductEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
-    @Column(name = "img", nullable = false)
-    private String img;
+
+//    При указывании типа ALl будет сохраняться не только изображения но и товар
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+//    private ProductImageEntity productImageEntity;
+//    Создаём новое поле, чтобы указывать изображение для превью
+//    private Long previewImageId;
+    private LocalDateTime dateTime;
+
+    @PrePersist
+    private void init() {
+        dateTime = LocalDateTime.now();
+    }
 
 }

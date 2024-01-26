@@ -4,7 +4,9 @@ import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
