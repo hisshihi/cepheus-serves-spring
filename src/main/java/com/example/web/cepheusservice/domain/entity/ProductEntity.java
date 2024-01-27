@@ -33,8 +33,9 @@ public class ProductEntity {
     private CategoryEntity categoryEntity;
 
 //    При указывании типа ALl будет сохраняться не только изображения но и товар
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
-//    private ProductImageEntity productImageEntity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private ImageProductEntity imageProductEntity;
 //    Создаём новое поле, чтобы указывать изображение для превью
 //    private Long previewImageId;
     private LocalDateTime dateTime;

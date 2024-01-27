@@ -3,6 +3,7 @@ package com.example.web.cepheusservice.mappers.impl;
 import com.example.web.cepheusservice.domain.dto.ProductDto;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.mappers.Mapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -24,4 +25,5 @@ public class ProductMapper implements Mapper<ProductEntity, ProductDto> {
     public ProductEntity mapFrom(ProductDto productDto) {
         return modelMapper.map(productDto, ProductEntity.class);
     }
+
 }

@@ -1,16 +1,12 @@
 package com.example.web.cepheusservice.services.impl;
 
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
-import com.example.web.cepheusservice.domain.entity.ProductImageEntity;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,16 +30,6 @@ public class ProductServiceImpl implements ProductService {
 //        }
 
         return productRepository.save(productEntity);
-    }
-
-    private ProductImageEntity toImageEntity(MultipartFile multipartFile) throws IOException {
-        ProductImageEntity image = new ProductImageEntity();
-        image.setName(multipartFile.getName());
-        image.setSize(multipartFile.getSize());
-        image.setOriginalFileName(multipartFile.getOriginalFilename());
-        image.setBytes(multipartFile.getBytes());
-        image.setContentType(multipartFile.getContentType());
-        return image;
     }
 
 

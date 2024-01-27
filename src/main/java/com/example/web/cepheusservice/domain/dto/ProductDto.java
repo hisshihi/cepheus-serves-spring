@@ -1,15 +1,13 @@
 package com.example.web.cepheusservice.domain.dto;
 
-import com.example.web.cepheusservice.domain.entity.ProductImageEntity;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,9 +21,8 @@ public class ProductDto {
     private Integer price;
     private CategoryDto categoryDto;
 
-    private ProductImageDto productImageDto;
-    //    Создаём новое поле, чтобы указывать изображение для превью
-    private Long previewImageId;
+    private ImageProductDto imageProductDto;
+
     private LocalDateTime dateTime;
 
     @PrePersist

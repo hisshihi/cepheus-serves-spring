@@ -1,7 +1,6 @@
 package com.example.web.cepheusservice.domain.dto;
 
-import com.example.web.cepheusservice.domain.entity.ProductEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductImageDto {
+public class ImageProductDto {
 
     private Long id;
     private String name;
@@ -20,7 +19,5 @@ public class ProductImageDto {
     private String contentType;
 
     private byte[] bytes;
-
-    private ProductDto productDto;
 
 }

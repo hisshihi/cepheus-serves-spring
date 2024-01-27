@@ -1,56 +1,76 @@
 package com.example.web.cepheusservice.controllers;
 
+import com.example.web.cepheusservice.domain.dto.CategoryDto;
 import com.example.web.cepheusservice.domain.dto.ProductDto;
 import com.example.web.cepheusservice.domain.entity.CategoryEntity;
+import com.example.web.cepheusservice.domain.entity.ImageProductEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.mappers.Mapper;
+import com.example.web.cepheusservice.mappers.impl.CategoryMapper;
 import com.example.web.cepheusservice.services.CategoryService;
+import com.example.web.cepheusservice.services.ImageProductService;
 import com.example.web.cepheusservice.services.ProductService;
+import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
+@MultipartConfig
 public class ProductContoller {
 
     private Mapper<ProductEntity, ProductDto> productMapper;
     private ProductService productService;
     private CategoryService categoryService;
+    private CategoryMapper categoryMapper;
+    private ImageProductService imageProductService;
 
 
-    public ProductContoller(Mapper<ProductEntity, ProductDto> productMapper, ProductService productService, CategoryService categoryService) {
+    public ProductContoller(Mapper<ProductEntity, ProductDto> productMapper,
+                            ProductService productService,
+                            CategoryService categoryService,
+                            ImageProductService imageProductService,
+                            CategoryMapper categoryMapper) {
         this.productMapper = productMapper;
         this.productService = productService;
         this.categoryService = categoryService;
+        this.imageProductService = imageProductService;
+        this.categoryMapper = categoryMapper;
     }
 
     //    Создание нового товара
-    @PostMapping(path = "products")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) throws IOException {
-        System.out.println(productDto);
-        ProductEntity productEntity = productMapper.mapFrom(productDto);
-
+//    @RequestParam("productImageDto") MultipartFile multipartFile
+    @PostMapping(path = "products", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ProductDto> createProduct(@RequestParam("title") String title,
+                                                    @RequestParam("text") String text,
+                                                    @RequestParam("price") Integer price,
+                                                    @ModelAttribute CategoryDto categoryDto,
+                                                    @RequestParam("image") MultipartFile multipartFile) throws IOException {
+//        ProductEntity productEntity = productMapper.mapFrom(productDto);
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setTitle(title);
+        productEntity.setText(text);
+        productEntity.setPrice(price);
 //        Находим категорию по id и устанавливаем её для товара
-        CategoryEntity categoryEntity = categoryService.findById(productDto.getCategoryDto());
-        productEntity.setCategoryEntity(categoryEntity);
+        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
+        CategoryEntity findCategory = categoryService.findById(categoryEntity);
+        productEntity.setCategoryEntity(findCategory);
 
+        imageProductService.save(multipartFile);
+        ImageProductEntity imageProductEntity = new ImageProductEntity();
+
+//        Сохранять в productEntity imageProductEntity
 
         ProductEntity savedProductEntity = productService.save(productEntity);
-
-//        Сохраняем файл
-//        String fileName = multipartFile.getOriginalFilename();
-//        Path filePath = Paths.get("uploads", fileName);
-//        multipartFile.transferTo(filePath);
-
-        return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     //    Отображение всех товаров
