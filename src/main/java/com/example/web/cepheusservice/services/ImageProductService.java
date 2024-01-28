@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface ImageProductService {
 
-    void save(MultipartFile multipartFile) throws IOException;
+    ImageProductEntity save(MultipartFile multipartFile, Long id) throws IOException;
 
 }

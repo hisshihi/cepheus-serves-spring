@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -64,13 +63,15 @@ public class ProductContoller {
         CategoryEntity findCategory = categoryService.findById(categoryEntity);
         productEntity.setCategoryEntity(findCategory);
 
-        imageProductService.save(multipartFile);
-        ImageProductEntity imageProductEntity = new ImageProductEntity();
+        ProductEntity savedProductEntity = productService.save(productEntity);
 
 //        Сохранять в productEntity imageProductEntity
+        ImageProductEntity imageProductEntity = imageProductService.save(multipartFile, savedProductEntity.getId());
+        productEntity.setImageProductEntity(imageProductEntity);
 
-        ProductEntity savedProductEntity = productService.save(productEntity);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        savedProductEntity = productService.save(productEntity);
+
+        return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.CREATED);
     }
 
     //    Отображение всех товаров
@@ -83,7 +84,7 @@ public class ProductContoller {
     //    Поиск товара по id
     @GetMapping(path = "products/{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
-        Optional<ProductEntity> foundProduct = productService.findById(id);
+        Optional<ProductEntity> foundProduct = productService.findProduct(id);
         return foundProduct.map(productEntity -> {
             ProductDto foundProductDto = productMapper.mapTo(productEntity);
             return new ResponseEntity<>(foundProductDto, HttpStatus.OK);
@@ -118,8 +119,6 @@ public class ProductContoller {
     //    Удаление товара
     @DeleteMapping(path = "products/{id}")
     public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
-
-
         productService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

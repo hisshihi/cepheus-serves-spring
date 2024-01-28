@@ -33,7 +33,7 @@ public class ProductEntity {
     private CategoryEntity categoryEntity;
 
 //    При указывании типа ALl будет сохраняться не только изображения но и товар
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private ImageProductEntity imageProductEntity;
 //    Создаём новое поле, чтобы указывать изображение для превью
