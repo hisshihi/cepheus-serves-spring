@@ -23,11 +23,5 @@ public class ProductDto {
 
     private ImageProductDto imageProductDto;
 
-    private LocalDateTime dateTime;
-
-    @PrePersist
-    private void init() {
-        dateTime = LocalDateTime.now();
-    }
 
 }

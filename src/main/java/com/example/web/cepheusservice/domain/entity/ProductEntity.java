@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "product_id_seq")
     private Long id;
     @Column(name = "title", nullable = false)
     private String title;
@@ -38,11 +38,6 @@ public class ProductEntity {
     private ImageProductEntity imageProductEntity;
 //    Создаём новое поле, чтобы указывать изображение для превью
 //    private Long previewImageId;
-    private LocalDateTime dateTime;
 
-    @PrePersist
-    private void init() {
-        dateTime = LocalDateTime.now();
-    }
 
 }
