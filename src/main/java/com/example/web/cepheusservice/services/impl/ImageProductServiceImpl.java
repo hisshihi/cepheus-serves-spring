@@ -40,4 +40,10 @@ public class ImageProductServiceImpl implements ImageProductService {
         return imageProductEntity;
     }
 
+    @Override
+    public void deleteImage(Long id) {
+        imageProductRepository.deleteById(id);
+    }
+
+
 }

@@ -22,7 +22,7 @@ public class ImageProductEntity {
     private Long size;
     private String contentType;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
 
