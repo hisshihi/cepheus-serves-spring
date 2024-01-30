@@ -98,26 +98,67 @@ public class ProductContoller {
     }
 
     //    Полное обновление товара
-    @PutMapping(path = "products/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
+    @PutMapping(path = "products/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id,
+                                                    @RequestParam("title") String title,
+                                                    @RequestParam("text") String text,
+                                                    @RequestParam("price") Integer price,
+                                                    @ModelAttribute CategoryDto categoryDto,
+                                                    @RequestParam("image") MultipartFile multipartFile) throws IOException {
         if (!productService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        productDto.setId(id);
-        ProductEntity productEntity = productMapper.mapFrom(productDto);
+
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setId(id);
+        productEntity.setTitle(title);
+        productEntity.setText(text);
+        productEntity.setPrice(price);
+
+        // Получаем экземпляр сущности категории по ID
+        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
+        CategoryEntity foundCategory = categoryService.findById(categoryEntity);
+
+        // Устанавливаем категорию для товара
+        productEntity.setCategoryEntity(foundCategory);
+
+        // Сохраняем товар в базу данных
         ProductEntity savedProductEntity = productService.save(productEntity);
+
+        // Сохраняем изображение товара
+        ImageProductEntity imageProductEntity = imageProductService.save(multipartFile, savedProductEntity.getId());
+
+        // Устанавливаем изображение товара
+        productEntity.setImageProductEntity(imageProductEntity);
+        // Сохраняем товар с изображением в базу данных
+        savedProductEntity = productService.save(productEntity);
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
 
     }
 
     //    Частичное обновление товара
-    @PatchMapping(path = "products/{id}")
-    public ResponseEntity<ProductDto> variableUpdateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
+    @PatchMapping(path = "products/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductDto> variableUpdateProduct(@PathVariable(value = "id", required = false) Long id,
+                                                            @RequestParam(value = "title", required = false) String title,
+                                                            @RequestParam(value = "text", required = false) String text,
+                                                            @RequestParam(value = "price", required = false) Integer price,
+                                                            @ModelAttribute CategoryDto categoryDto,
+                                                            @RequestParam(value = "image", required = false) MultipartFile multipartFile) {
         if (!productService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        ProductEntity productEntity = productMapper.mapFrom(productDto);
+//        ProductEntity productEntity = productMapper.mapFrom(productDto);
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setTitle(title);
+        productEntity.setText(text);
+        productEntity.setPrice(price);
+
+//        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
+//        CategoryEntity findCategoryEntity = categoryService.findById(categoryEntity);
+//
+//        productEntity.setCategoryEntity(findCategoryEntity);
+
         ProductEntity savedProductEntity = productService.variableUpdate(id, productEntity);
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
     }

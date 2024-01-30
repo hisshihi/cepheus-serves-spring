@@ -9,4 +9,6 @@ public interface ImageProductService {
 
     ImageProductEntity save(MultipartFile multipartFile, Long id) throws IOException;
 
+
+
 }
