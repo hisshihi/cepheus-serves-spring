@@ -24,22 +24,8 @@ public class ImageProductServiceImpl implements ImageProductService {
 
     @Override
     public ImageProductEntity save(MultipartFile multipartFile, Long id) throws IOException {
+
         ImageProductEntity imageProductEntity = new ImageProductEntity();
-        if (imageProductRepository.existsById(id)) {
-
-            imageProductEntity.setName(multipartFile.getOriginalFilename());
-            imageProductEntity.setOriginalFileName(multipartFile.getOriginalFilename());
-            imageProductEntity.setSize(multipartFile.getSize());
-            imageProductEntity.setContentType(multipartFile.getContentType());
-            imageProductEntity.setBytes(multipartFile.getBytes());
-
-//        Устанавливаем id и сохраняем товар к изображению
-            ProductEntity productEntity = productService.findProduct(id).orElseThrow(() -> new RuntimeException("Товар с таким id не найден"));
-
-//            imageProductEntity.setProductEntity(productEntity);
-            imageProductRepository.save(imageProductEntity);
-            return imageProductEntity;
-        }
         imageProductEntity.setName(multipartFile.getOriginalFilename());
         imageProductEntity.setOriginalFileName(multipartFile.getOriginalFilename());
         imageProductEntity.setSize(multipartFile.getSize());
@@ -48,11 +34,15 @@ public class ImageProductServiceImpl implements ImageProductService {
 
 //        Устанавливаем id и сохраняем товар к изображению
         ProductEntity productEntity = productService.findProduct(id).orElseThrow(() -> new RuntimeException("Товар с таким id не найден"));
+
         imageProductEntity.setProductEntity(productEntity);
         imageProductRepository.save(imageProductEntity);
         return imageProductEntity;
+    }
 
-
+    @Override
+    public void deleteImage(Long id) {
+        imageProductRepository.deleteById(id);
     }
 
 

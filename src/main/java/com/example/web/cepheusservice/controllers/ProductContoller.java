@@ -98,6 +98,7 @@ public class ProductContoller {
     }
 
     //    Полное обновление товара
+
     @PutMapping(path = "products/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id,
                                                     @RequestParam("title") String title,
@@ -109,8 +110,10 @@ public class ProductContoller {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setId(id);
+        // Получаем товар из базы данных
+        ProductEntity productEntity = productService.findProduct(id).orElseThrow(() -> new RuntimeException("Товар с таким id не найден"));
+
+        // Обновляем поля товара
         productEntity.setTitle(title);
         productEntity.setText(text);
         productEntity.setPrice(price);
@@ -125,16 +128,22 @@ public class ProductContoller {
         // Сохраняем товар в базу данных
         ProductEntity savedProductEntity = productService.save(productEntity);
 
+        if (savedProductEntity.getImageProductEntity() != null) {
+            System.out.println(savedProductEntity.getImageProductEntity().getId());
+            imageProductService.deleteImage(savedProductEntity.getImageProductEntity().getId());
+        }
+
         // Сохраняем изображение товара
         ImageProductEntity imageProductEntity = imageProductService.save(multipartFile, savedProductEntity.getId());
-
         // Устанавливаем изображение товара
         productEntity.setImageProductEntity(imageProductEntity);
+
         // Сохраняем товар с изображением в базу данных
         savedProductEntity = productService.save(productEntity);
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
 
     }
+
 
     //    Частичное обновление товара
     @PatchMapping(path = "products/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
