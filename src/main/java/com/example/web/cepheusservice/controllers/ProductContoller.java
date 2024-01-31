@@ -129,7 +129,6 @@ public class ProductContoller {
         ProductEntity savedProductEntity = productService.save(productEntity);
 
         if (savedProductEntity.getImageProductEntity() != null) {
-            System.out.println(savedProductEntity.getImageProductEntity().getId());
             imageProductService.deleteImage(savedProductEntity.getImageProductEntity().getId());
         }
 
