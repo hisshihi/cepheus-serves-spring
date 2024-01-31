@@ -24,8 +24,10 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("")
+                .requestMatchers("/", "/register", "/authenticate") // Главная страница, страница авторизации и регистрации
                 .permitAll()
+                .requestMatchers("/admin/**") // Админ панель
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -36,5 +38,5 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
-
 }
+
