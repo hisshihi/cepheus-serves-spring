@@ -81,14 +81,14 @@ public class ProductContoller {
 
 
     //    Отображение всех товаров
-    @GetMapping(path = "products")
+    @GetMapping(path = "/")
     public Page<ProductDto> listProducts(Pageable pageable) {
         Page<ProductEntity> products = productService.findAll(pageable);
         return products.map(productMapper::mapTo);
     }
 
     //    Поиск товара по id
-    @GetMapping(path = "products/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
         Optional<ProductEntity> foundProduct = productService.findProduct(id);
         return foundProduct.map(productEntity -> {
