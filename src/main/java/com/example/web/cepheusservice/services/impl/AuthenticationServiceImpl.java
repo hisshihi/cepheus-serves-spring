@@ -4,7 +4,7 @@ import com.example.web.cepheusservice.auth.AuthenticationRequest;
 import com.example.web.cepheusservice.auth.AuthenticationResponse;
 import com.example.web.cepheusservice.auth.RegisterRequest;
 import com.example.web.cepheusservice.domain.entity.Role;
-import com.example.web.cepheusservice.domain.entity.User;
+import com.example.web.cepheusservice.domain.entity.UserEntity;
 import com.example.web.cepheusservice.repositories.UserRepository;
 import com.example.web.cepheusservice.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User
+        var user = UserEntity
                 .builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())

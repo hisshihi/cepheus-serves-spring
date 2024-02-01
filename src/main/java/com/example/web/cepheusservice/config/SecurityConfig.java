@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,8 +27,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/", "/register", "/authenticate") // Главная страница, страница авторизации и регистрации
                 .permitAll()
-                .requestMatchers("/admin/**") // Админ панель
-                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -40,3 +39,5 @@ public class SecurityConfig {
     }
 }
 
+//.requestMatchers("/admin/**") // Админ панель
+//                .hasRole("ADMIN")
