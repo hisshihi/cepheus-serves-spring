@@ -39,16 +39,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
 //        Првоеряем, существует ли токен, проверяем на null и начниается ли строка с Bearer и пробела
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            Вызываем цепочку фильров с запросом и ответом
+//            Если заголовок отсутствует или не начинается с Bearer, фильтр пропускает запрос.
             filterChain.doFilter(request, response);
             return;
         }
+//        Если заголовок валидный, то из него извлекается сам JWT-токен.
 //        Извлекаем токен и заголовка
         jwt = authHeader.substring(7);
         // todo извлекаем userEmail из JWT токена;
         userEmail = jwtService.extractUseremail(jwt);
-//        Если у пользователя есть email но он не аунтифицирован, то получаем его
+//        Проверка JWT-токена:
+//        Если email не null и пользователь не аутентифицирован, то происходит загрузка информации о пользователе из сервиса UserDetailsService
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//            Из токена извлекается email пользователя.
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             /*
             * Если токен и пользователь валдный

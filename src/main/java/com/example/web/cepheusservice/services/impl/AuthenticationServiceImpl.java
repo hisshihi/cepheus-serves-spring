@@ -17,13 +17,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+//    Этот класс реализует методы для регистрации и аутентификации пользователей.
+//Использует Spring Security для аутентификации пользователей.
+//Использует JWT для создания токенов доступа для пользователей.
+
+//    userRepository: Репозиторий для работы с пользователями.
     private final UserRepository userRepository;
+//    passwordEncoder: Кодировщик паролей.
     private final PasswordEncoder passwordEncoder;
+//    jwtService: Сервис для создания JWT-токенов.
     private final JwtServiceImpl jwtService;
+//    authenticationManager: Менеджер аутентификации Spring Security.
     private final AuthenticationManager authenticationManager;
 
     @Override
+//    Регистрирует нового пользователя.
     public AuthenticationResponse register(RegisterRequest request) {
+//        Создает новый объект UserEntity из данных запроса.
+//Кодирует пароль пользователя.
+//Сохраняет пользователя в базу данных.
+//Генерирует JWT-токен для пользователя.
+//Возвращает ответ с токеном.
         var user = UserEntity
                 .builder()
                 .firstname(request.getFirstname())
@@ -39,7 +53,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+//    Аутентифицирует пользователя.
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+//        Проверяет учетные данные пользователя с помощью менеджера аутентификации.
+//Ищет пользователя в базе данных по его email.
+//Генерирует JWT-токен для пользователя.
+//Возвращает ответ с токеном.
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);

@@ -20,14 +20,23 @@ import java.util.stream.Collectors;
 @Service
 public class JwtServiceImpl implements JwtService {
 
+//    Этот класс реализует интерфейс JwtService и предоставляет методы для:
+//
+//  Извлечения email пользователя из JWT-токена.
+//  Генерации JWT-токена для пользователя.
+//  Проверки подлинности JWT-токена.
+//  Извлечения различных claims из JWT-токена.
+
+//    SECRET_KEY: Секретный ключ, используемый для подписи JWT-токенов.
     private static final String SECRET_KEY = "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068";
 
-    //    Получаем конкретного пользователя
+    //    extractUseremail(String jwt): Извлекает email пользователя из JWT-токена.
     @Override
     public String extractUseremail(String jwt) {
         return exctractClaim(jwt, Claims::getSubject);
     }
 
+    // exctractClaim(String token, Function<Claims, T> claimsResolver): Извлекает claim из JWT-токена.
     public <T> T exctractClaim(String token, Function<Claims, T> claimsResolver) {
 //        Извдекаем все поля из токена и возвращаем объект Claims
         final Claims claims = extractAllClaims(token);
@@ -35,18 +44,20 @@ public class JwtServiceImpl implements JwtService {
         return claimsResolver.apply(claims);
     }
 
-    // Генерация токена на основе данных пользователя
+    // generateToken(UserDetails userDetails): Генерирует JWT-токен для пользователя.
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extractClaim = new HashMap<>();
+        extractClaim.put("role", userDetails.getAuthorities().toString());
+        return generateToken(extractClaim, userDetails);
     }
 
-    // Генерация токена для ползователя
+    // generateToken(Map<String, Object> extractClaims, UserDetails userDetails):
+    // Генерирует JWT-токен для пользователя с дополнительными claims.
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
-                .setAudience(userDetails.getAuthorities().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -59,16 +70,17 @@ public class JwtServiceImpl implements JwtService {
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(jwt);
     }
 
-//    Првоерка не истёк ли срок годности токена
+//    Проверяет, истек ли срок действия JWT-токена.
     public boolean isTokenExpired(String jwt) {
         return extractExpiration(jwt).before(new Date()); 
     }
 
+//    Извлекает дату истечения срока действия из JWT-токена.
     public Date extractExpiration(String jwt) {
         return exctractClaim(jwt, Claims::getExpiration);
     }
 
-    //    Извлечение всех параметров из токена
+    //    Извлекает все claims из JWT-токена.
     public Claims extractAllClaims(String jwt) {
         return Jwts
                 .parserBuilder()
@@ -80,6 +92,7 @@ public class JwtServiceImpl implements JwtService {
 
     }
 
+//     Возвращает ключ подписи для JWT-токенов.
     public Key getSignInKey() {
 //        Декодируем ключ
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);

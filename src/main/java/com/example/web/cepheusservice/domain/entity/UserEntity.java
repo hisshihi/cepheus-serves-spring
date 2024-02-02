@@ -58,16 +58,19 @@ public class UserEntity implements UserDetails {
         return true;
     }
 
+    // Устанавливаем, что аккаунт не заблокирован
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+//    Устанавливаем, что пароль не истекает
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+//    Устанавливаем, что пользователь активен
     @Override
     public boolean isEnabled() {
         return true;

@@ -17,16 +17,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
+//Этот код конфигурирует Spring Security для работы с базой данных пользователей.
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
 
+//    Предоставляет информацию о пользователях для аутентификации.
+//    В данном коде реализован с помощью метода userDetailsService(), который ищет пользователя по email в базе данных.
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }
 
-//    Получение доступа к данным пользователя и закодировании пароля и тд
+//    Проверяет подлинность пользователей.
+//  В данном коде используется DaoAuthenticationProvider, который:
+//  Использует UserDetailsService для получения информации о пользователе.
+//  Сравнивает пароль, введенный пользователем, с паролем, хранящимся в базе данных.
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -38,6 +44,8 @@ public class ApplicationConfig {
     }
 
 //    Создаётся менеджер аунтификации
+//    Отвечает за аутентификацию пользователей.
+//  В данном коде создается с помощью authenticationConfiguration.getAuthenticationManager().
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
