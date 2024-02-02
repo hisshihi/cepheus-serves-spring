@@ -23,6 +23,6 @@ public class UserServiceImpl implements UserServise {
 
     @Override
     public List<UserEntity> findAll() {
-        return StreamSupport.stream(findAll().spliterator(), false).collect(Collectors.toList());
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 }
