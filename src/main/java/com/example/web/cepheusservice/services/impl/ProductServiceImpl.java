@@ -76,5 +76,13 @@ public class ProductServiceImpl implements ProductService {
         return StreamSupport.stream(productRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
+    @Override
+    public Page<ProductEntity> findTop12ByOrderByCountDesc(Pageable pageable) {
+//        return StreamSupport.stream(productRepository.findTop12ByOrderByCountDesc().spliterator(), false).collect(Collectors.toList());
+
+        return productRepository.findByOrderByCountDesc(pageable);
+
+    }
+
 
 }
