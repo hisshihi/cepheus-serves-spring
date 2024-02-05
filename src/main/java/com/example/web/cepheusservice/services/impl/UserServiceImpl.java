@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,4 +26,21 @@ public class UserServiceImpl implements UserServise {
     public List<UserEntity> findAll() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
+
+    @Override
+    public boolean isExists(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<UserEntity> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
+
 }

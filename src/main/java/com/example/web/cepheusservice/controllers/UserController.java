@@ -11,10 +11,12 @@ import com.example.web.cepheusservice.services.JwtService;
 import com.example.web.cepheusservice.services.UserServise;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,6 +43,26 @@ public class UserController {
     public List<UserDto> listUsers() {
         List<UserEntity> userEntityList = userServise.findAll();
         return userEntityList.stream().map(mapper::mapTo).collect(Collectors.toList());
+    }
+
+//    Поиск пользователя по id
+    @GetMapping(path = "/users/{id}")
+    public ResponseEntity<UserDto> findUser(@PathVariable("id") Long id) {
+        Optional<UserEntity> findUser = userServise.findUserById(id);
+        return findUser.map(userEntity -> {
+            UserDto userDto = mapper.mapTo(userEntity);
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+
+
+//    Удаление пользователя
+    @DeleteMapping(path = "/users/{id}")
+    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
+        userServise.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

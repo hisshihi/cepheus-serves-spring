@@ -31,6 +31,8 @@ public class UserEntity implements UserDetails {
     private String phone;
     private String password;
 
+    private String token;
+
 //    Сообщаем, что это класс перечисления
     @Enumerated(EnumType.STRING)
     private Role role;
