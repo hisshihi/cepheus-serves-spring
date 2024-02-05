@@ -46,6 +46,7 @@ public class TestDataUtil {
                 .lastname("Test")
                 .email("hisstest@gmail.com")
                 .phone("123456789")
+                .password("12345678")
                 .role(Role.USER)
                 .token("fdsadsf")
                 .build();

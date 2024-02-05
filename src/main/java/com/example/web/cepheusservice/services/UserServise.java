@@ -19,4 +19,6 @@ public interface UserServise {
     void delete(Long id);
 
     UserEntity partialUpdate(Long id, UserEntity userEntity);
+
+    void save(UserEntity user);
 }

@@ -51,5 +51,10 @@ public class UserServiceImpl implements UserServise {
         }).orElseThrow(() -> new RuntimeException("Данный пользователь не сущесвтует"));
     }
 
+    @Override
+    public void save(UserEntity user) {
+        userRepository.save(user);
+    }
+
 
 }

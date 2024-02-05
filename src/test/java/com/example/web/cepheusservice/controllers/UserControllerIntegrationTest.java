@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Optional;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
@@ -36,17 +38,24 @@ public class UserControllerIntegrationTest {
         this.objectMapper = objectMapper;
     }
 
-//    @Test
-//    public void testThatCreateUserSuccessfullyReturnsHttp201Created() throws Exception {
+    @Test
+    public void testThatListUsersReturnsHttpStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/users").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testThatListUsersReturnsListOfUsers() throws Exception {
 //        UserEntity user = TestDataUtil.createUserEntity();
-//        user.setId(null);
-//        String userJosn = objectMapper.writeValueAsString(user);
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.post("/users")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(userJosn)
-//        ).andExpect(MockMvcResultMatchers.status().isCreated());
-//    }
+//        userServise.save(user);
+
+        Optional<UserEntity> user = userServise.findUserById(1L);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].email").value(user.get().getEmail()));
+    }
 
 }
