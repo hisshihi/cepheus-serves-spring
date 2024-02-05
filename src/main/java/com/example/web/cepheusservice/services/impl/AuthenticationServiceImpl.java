@@ -47,8 +47,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        userRepository.save(user);
+
         var jwtToken = jwtService.generateToken(user);
+        user.setToken(jwtToken);
+        userRepository.save(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
@@ -62,6 +64,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        user.setToken(jwtToken);
+        userRepository.save(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 }
