@@ -2,6 +2,8 @@ package com.example.web.cepheusservice;
 
 import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
+import com.example.web.cepheusservice.domain.entity.Role;
+import com.example.web.cepheusservice.domain.entity.UserEntity;
 
 import java.time.LocalDateTime;
 
@@ -33,6 +35,19 @@ public class TestDataUtil {
                 .price(19000)
                 .categoryEntity(createTestCategory())
                 .imageProductEntity(null)
+                .build();
+    }
+
+//    Пользователи
+    public static UserEntity createUserEntity() {
+        return UserEntity.builder()
+                .id(2L)
+                .firstname("Hiss")
+                .lastname("Test")
+                .email("hisstest@gmail.com")
+                .phone("123456789")
+                .role(Role.USER)
+                .token("fdsadsf")
                 .build();
     }
 
