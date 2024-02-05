@@ -42,5 +42,14 @@ public class UserServiceImpl implements UserServise {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public UserEntity partialUpdate(Long id, UserEntity userEntity) {
+        userEntity.setId(id);
+        return userRepository.findById(id).map(exsistingUser -> {
+            Optional.ofNullable(userEntity.getRole()).ifPresent(exsistingUser::setRole);
+            return userRepository.save(exsistingUser);
+        }).orElseThrow(() -> new RuntimeException("Данный пользователь не сущесвтует"));
+    }
+
 
 }

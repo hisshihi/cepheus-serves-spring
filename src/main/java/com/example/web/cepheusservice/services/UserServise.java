@@ -17,4 +17,6 @@ public interface UserServise {
     Optional<UserEntity> findUserById(Long id);
 
     void delete(Long id);
+
+    UserEntity partialUpdate(Long id, UserEntity userEntity);
 }
