@@ -36,6 +36,8 @@ public class ProductEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private ImageProductEntity imageProductEntity;
+    @Lob
+    private Long count;
 //    Создаём новое поле, чтобы указывать изображение для превью
 //    private Long previewImageId;
 

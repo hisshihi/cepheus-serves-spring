@@ -22,4 +22,7 @@ public interface ProductService {
     void delete(Long id);
 
     List<ProductEntity> findAllList();
+
+
+    Page<ProductEntity> findTop12ByOrderByCountDesc(Pageable pageable);
 }

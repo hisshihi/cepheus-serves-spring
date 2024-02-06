@@ -26,4 +26,5 @@ public interface JwtService {
     Claims extractAllClaims(String jwt);
 
     Key getSignInKey();
+
 }
