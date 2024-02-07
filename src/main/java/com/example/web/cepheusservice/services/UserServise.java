@@ -21,4 +21,5 @@ public interface UserServise {
     UserEntity partialUpdate(Long id, UserEntity userEntity);
 
     void save(UserEntity user);
+
 }

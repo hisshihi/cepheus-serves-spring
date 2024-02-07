@@ -5,8 +5,10 @@ import com.example.web.cepheusservice.auth.AuthenticationResponse;
 import com.example.web.cepheusservice.auth.RegisterRequest;
 import com.example.web.cepheusservice.domain.entity.Role;
 import com.example.web.cepheusservice.domain.entity.UserEntity;
+import com.example.web.cepheusservice.exception.UserAlreadyExistsException;
 import com.example.web.cepheusservice.repositories.UserRepository;
 import com.example.web.cepheusservice.services.AuthenticationService;
+import com.example.web.cepheusservice.services.UserServise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,23 +23,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //Использует Spring Security для аутентификации пользователей.
 //Использует JWT для создания токенов доступа для пользователей.
 
-//    userRepository: Репозиторий для работы с пользователями.
+    //    userRepository: Репозиторий для работы с пользователями.
     private final UserRepository userRepository;
-//    passwordEncoder: Кодировщик паролей.
+    //    passwordEncoder: Кодировщик паролей.
     private final PasswordEncoder passwordEncoder;
-//    jwtService: Сервис для создания JWT-токенов.
+    //    jwtService: Сервис для создания JWT-токенов.
     private final JwtServiceImpl jwtService;
-//    authenticationManager: Менеджер аутентификации Spring Security.
+    //    authenticationManager: Менеджер аутентификации Spring Security.
     private final AuthenticationManager authenticationManager;
+
+    private final UserServise userServise;
 
     @Override
 //    Регистрирует нового пользователя.
     public AuthenticationResponse register(RegisterRequest request) {
-//        Создает новый объект UserEntity из данных запроса.
-//Кодирует пароль пользователя.
-//Сохраняет пользователя в базу данных.
-//Генерирует JWT-токен для пользователя.
-//Возвращает ответ с токеном.
+        //        Создает новый объект UserEntity из данных запроса.
+        //Кодирует пароль пользователя.
+        //Сохраняет пользователя в базу данных.
+        //Генерирует JWT-токен для пользователя.
+        //Возвращает ответ с токеном.
         var user = UserEntity
                 .builder()
                 .firstname(request.getFirstname())
