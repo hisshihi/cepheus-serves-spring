@@ -21,3 +21,6 @@ spring:
     cors:
       allowed-origins: http://localhost:8081
 
+web:
+  cepheusservice:
+    secret_key: "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068"

@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class JwtServiceImpl implements JwtService {
 //  Извлечения различных claims из JWT-токена.
 
 //    SECRET_KEY: Секретный ключ, используемый для подписи JWT-токенов.
-    private static final String SECRET_KEY = "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068";
+    @Value("${web.cepheusservice.secret_key}")
+    private static String SECRET_KEY;
 
     //    extractUseremail(String jwt): Извлекает email пользователя из JWT-токена.
     @Override
