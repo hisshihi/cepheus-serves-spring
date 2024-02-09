@@ -23,5 +23,5 @@ public class ProductDto {
 
     private ImageProductDto imageProductDto;
 
-
+    private Long count;
 }

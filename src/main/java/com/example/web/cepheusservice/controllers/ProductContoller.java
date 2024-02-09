@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @MultipartConfig
@@ -59,6 +60,12 @@ public class ProductContoller {
         productEntity.setTitle(title);
         productEntity.setText(text);
         productEntity.setPrice(price);
+
+//        Заполняю count случайными числами при создании
+        Random random = new Random();
+        Long randNumber = random.nextLong(2000L);
+
+        productEntity.setCount(randNumber);
 
         // Получаем экземпляр сущности категории по ID
         CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
