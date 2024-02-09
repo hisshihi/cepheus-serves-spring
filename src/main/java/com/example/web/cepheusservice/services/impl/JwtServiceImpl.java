@@ -30,7 +30,7 @@ public class JwtServiceImpl implements JwtService {
 
 //    SECRET_KEY: Секретный ключ, используемый для подписи JWT-токенов.
     @Value("${web.cepheusservice.secret_key}")
-    private static String SECRET_KEY;
+    private final static String SECRET_KEY = "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068";
 
     //    extractUseremail(String jwt): Извлекает email пользователя из JWT-токена.
     @Override

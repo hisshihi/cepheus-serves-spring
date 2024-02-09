@@ -41,5 +41,4 @@ public class ProductEntity {
 //    Создаём новое поле, чтобы указывать изображение для превью
 //    private Long previewImageId;
 
-
 }
