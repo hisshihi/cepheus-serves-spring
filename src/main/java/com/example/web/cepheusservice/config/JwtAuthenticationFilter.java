@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //        Если заголовок валидный, то из него извлекается сам JWT-токен.
 //        Извлекаем токен и заголовка
         jwt = authHeader.substring(7);
-        // todo извлекаем userEmail из JWT токена;
+        // извлекаем userEmail из JWT токена;
         userEmail = jwtService.extractUseremail(jwt);
 //        Проверка JWT-токена:
 //        Если email не null и пользователь не аутентифицирован, то происходит загрузка информации о пользователе из сервиса UserDetailsService

@@ -13,17 +13,24 @@ public class TestDataUtil {
 
     }
 
-    public static CategoryEntity createTestCategory() {
+    public static CategoryEntity createTestCategoryA() {
         return CategoryEntity.builder()
-                .id(2L)
+                .id(1L)
                 .title("Сервера")
                 .build();
     }
 
-    public static CategoryEntity createTestCategoryA() {
+    public static CategoryEntity createTestCategoryB() {
         return CategoryEntity.builder()
-                .id(4L)
+                .id(2L)
                 .title("Наушники")
+                .build();
+    }
+
+    public static CategoryEntity createTestCategoryC() {
+        return CategoryEntity.builder()
+                .id(3L)
+                .title("Видеокарты")
                 .build();
     }
 
@@ -33,7 +40,7 @@ public class TestDataUtil {
                 .title("Apple AirPods 2 Pro")
                 .text("Apple AirPods 2 Pro")
                 .price(19000)
-                .categoryEntity(createTestCategory())
+                .categoryEntity(createTestCategoryA())
                 .imageProductEntity(null)
                 .build();
     }
