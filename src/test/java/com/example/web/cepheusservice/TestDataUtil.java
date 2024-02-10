@@ -48,7 +48,7 @@ public class TestDataUtil {
 //    Пользователи
     public static UserEntity createUserEntity() {
         return UserEntity.builder()
-                .id(2L)
+                .id(1L)
                 .firstname("Hiss")
                 .lastname("Test")
                 .email("hisstest@gmail.com")
