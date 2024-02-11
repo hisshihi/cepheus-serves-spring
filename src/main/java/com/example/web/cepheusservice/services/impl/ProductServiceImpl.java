@@ -3,6 +3,7 @@ package com.example.web.cepheusservice.services.impl;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.services.ProductService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity save(ProductEntity productEntity) {
+    public ProductEntity save(ProductEntity productEntity) throws BadRequestException {
 //        ProductImageEntity image = null;
 //        if (image.getSize() != 0) {
 //            image = toImageEntity(multipartFile);
 //            productEntity.setProductImageEntity(image);
 //        }
 
+        Boolean existTitle = productRepository.existsByTitle(productEntity.getTitle());
+        if (existTitle) {
+            throw new BadRequestException("Такой товар уже существует");
+        }
+
         return productRepository.save(productEntity);
     }
+
+
 
 
     @Override
