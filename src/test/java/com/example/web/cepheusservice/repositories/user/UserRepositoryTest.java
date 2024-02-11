@@ -1,4 +1,4 @@
-package com.example.web.cepheusservice.user;
+package com.example.web.cepheusservice.repositories.user;
 
 import com.example.web.cepheusservice.TestDataUtil;
 import com.example.web.cepheusservice.domain.entity.UserEntity;

@@ -34,7 +34,7 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static ProductEntity createProductEntity() {
+    public static ProductEntity createProductEntityA() {
         return ProductEntity.builder()
                 .id(1L)
                 .title("Apple AirPods 2 Pro")
@@ -42,6 +42,19 @@ public class TestDataUtil {
                 .price(19000)
                 .categoryEntity(createTestCategoryA())
                 .imageProductEntity(null)
+                .count(100L)
+                .build();
+    }
+
+    public static ProductEntity createProductEntityB() {
+        return ProductEntity.builder()
+                .id(2L)
+                .title("Apple AirPods 2")
+                .text("Apple AirPods 2")
+                .price(20000)
+                .categoryEntity(createTestCategoryB())
+                .imageProductEntity(null)
+                .count(300L)
                 .build();
     }
 
