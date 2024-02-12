@@ -19,9 +19,9 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 2MB
-  graphql:
-    cors:
-      allowed-origins: *
+#  graphql:
+#    cors:
+#      allowed-origins: http://localhost:8081
 
 web:
   cepheusservice:
