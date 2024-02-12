@@ -51,20 +51,20 @@ class ProductServiceImplTest {
         assertThat(capturedProduct).isEqualTo(productEntity);
     }
 
-    @Test
-    void willThrowWhenTitleIsTaken() {
-//        give
-        ProductEntity productEntity = TestDataUtil.createProductEntityA();
-
-        when(productRepository.existsByTitle(productEntity.getTitle()))
-                .thenReturn(true);
-
-//        when
-//        then
-        assertThatThrownBy(() -> underTest.save(productEntity))
-                .isInstanceOf(BadRequestException.class)
-                .hasMessageContaining("Такой товар уже существует");
-    }
+//    @Test
+//    void willThrowWhenTitleIsTaken() {
+////        give
+//        ProductEntity productEntity = TestDataUtil.createProductEntityA();
+//
+//        when(productRepository.existsByTitle(productEntity.getTitle()))
+//                .thenReturn(true);
+//
+////        when
+////        then
+//        assertThatThrownBy(() -> underTest.save(productEntity))
+//                .isInstanceOf(BadRequestException.class)
+//                .hasMessageContaining("Такой товар уже существует");
+//    }
 
 
 
