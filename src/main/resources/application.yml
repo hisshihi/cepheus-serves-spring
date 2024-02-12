@@ -21,7 +21,7 @@ spring:
       max-request-size: 2MB
   graphql:
     cors:
-      allowed-origins: http://localhost:8081
+      allowed-origins: https://cepheus-serves-spring-production.up.railway.app/
 
 web:
   cepheusservice:

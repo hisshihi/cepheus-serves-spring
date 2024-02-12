@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8081/")
+                        .allowedOrigins("https://cepheus-serves-spring-production.up.railway.app/")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                         .allowedHeaders("*");
             }
