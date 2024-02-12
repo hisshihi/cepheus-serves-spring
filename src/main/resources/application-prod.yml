@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
+    driver-class-name: org.postgresql.Driver
+  profiles:
+    active: prod
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  graphql:
+    cors:
+      allowed-origins: http://localhost:8081
+
+web:
+  cepheusservice:
+    secret_key: "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068"

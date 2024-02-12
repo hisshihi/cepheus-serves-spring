@@ -13,35 +13,55 @@ public class TestDataUtil {
 
     }
 
-    public static CategoryEntity createTestCategory() {
+    public static CategoryEntity createTestCategoryA() {
         return CategoryEntity.builder()
-                .id(2L)
+                .id(1L)
                 .title("Сервера")
                 .build();
     }
 
-    public static CategoryEntity createTestCategoryA() {
+    public static CategoryEntity createTestCategoryB() {
         return CategoryEntity.builder()
-                .id(4L)
+                .id(2L)
                 .title("Наушники")
                 .build();
     }
 
-    public static ProductEntity createProductEntity() {
+    public static CategoryEntity createTestCategoryC() {
+        return CategoryEntity.builder()
+                .id(3L)
+                .title("Видеокарты")
+                .build();
+    }
+
+    public static ProductEntity createProductEntityA() {
         return ProductEntity.builder()
                 .id(1L)
                 .title("Apple AirPods 2 Pro")
                 .text("Apple AirPods 2 Pro")
                 .price(19000)
-                .categoryEntity(createTestCategory())
+                .categoryEntity(null)
                 .imageProductEntity(null)
+                .count(100L)
+                .build();
+    }
+
+    public static ProductEntity createProductEntityB() {
+        return ProductEntity.builder()
+                .id(2L)
+                .title("Apple AirPods 2")
+                .text("Apple AirPods 2")
+                .price(20000)
+                .categoryEntity(createTestCategoryB())
+                .imageProductEntity(null)
+                .count(300L)
                 .build();
     }
 
 //    Пользователи
     public static UserEntity createUserEntity() {
         return UserEntity.builder()
-                .id(2L)
+                .id(1L)
                 .firstname("Hiss")
                 .lastname("Test")
                 .email("hisstest@gmail.com")

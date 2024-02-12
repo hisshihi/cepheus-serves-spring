@@ -13,6 +13,8 @@ import com.example.web.cepheusservice.services.ProductService;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -98,13 +102,17 @@ public class ProductContoller {
     }
 
 //    Отображение самых популярных товаров
-    @GetMapping(path = "/products/hot")
-    @Transactional
-    public Page<ProductDto> listHotProducts(Pageable pageable) {
-        Page<ProductEntity> products = productService.findTop12ByOrderByCountDesc(pageable);
-//        return products.stream().filter(product -> product.getImageProductEntity() != null).map(productMapper::mapTo).collect(Collectors.toList());
-        return products.map(productMapper::mapTo);
-    }
+@GetMapping(path = "/products/hot")
+@Transactional
+public Page<ProductDto> listHotProducts(Pageable pageable) {
+    // Ограничиваем количество товаров, возвращаемых сервисом
+    PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 6);
+    Page<ProductEntity> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
+
+    if (pageable.getPageNumber() > 1) return Page.empty();
+
+    return productsPage.map(productMapper::mapTo);
+}
 
     //    Поиск товара по id
     @GetMapping(path = "/products/{id}")
