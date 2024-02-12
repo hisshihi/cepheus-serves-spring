@@ -1,11 +1,10 @@
 spring:
   datasource:
-    username: ${PROD_DB_USERNAME}
-    password: ${PROD_DB_PASSWORD}
-    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
+    username: postgres
+    password: fBagD-EC-F-*1cF4b53GGB*db6113G-5
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:48967/railway
     driver-class-name: org.postgresql.Driver
-  profiles:
-    active: prod
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,9 +18,9 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 2MB
-#  graphql:
-#    cors:
-#      allowed-origins: http://localhost:8081
+  graphql:
+    cors:
+      allowed-origins: http://localhost:8081
 
 web:
   cepheusservice:
