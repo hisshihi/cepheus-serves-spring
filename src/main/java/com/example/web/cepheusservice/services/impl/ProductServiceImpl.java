@@ -30,10 +30,10 @@ public class ProductServiceImpl implements ProductService {
 //            productEntity.setProductImageEntity(image);
 //        }
 
-        Boolean existTitle = productRepository.existsByTitle(productEntity.getTitle());
-        if (existTitle) {
-            throw new BadRequestException("Такой товар уже существует");
-        }
+//        Boolean existTitle = productRepository.existsByTitle(productEntity.getTitle());
+//        if (existTitle) {
+//            throw new BadRequestException("Такой товар уже существует");
+//        }
 
         return productRepository.save(productEntity);
     }
