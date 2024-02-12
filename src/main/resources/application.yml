@@ -2,7 +2,7 @@ spring:
   datasource:
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
-    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PORT_DB_NAME}
+    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
     driver-class-name: org.postgresql.Driver
   profiles:
     active: prod
