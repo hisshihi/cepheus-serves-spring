@@ -40,7 +40,7 @@ public class TestDataUtil {
                 .title("Apple AirPods 2 Pro")
                 .text("Apple AirPods 2 Pro")
                 .price(19000)
-                .categoryEntity(null)
+                .categoryEntity(createTestCategoryA())
                 .imageProductEntity(null)
                 .count(100L)
                 .build();

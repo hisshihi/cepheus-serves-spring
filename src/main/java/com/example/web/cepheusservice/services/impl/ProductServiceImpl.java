@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.services.impl;
 
+import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.services.ProductService;
@@ -92,5 +93,9 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    @Override
+    public Page<ProductEntity> filterByCategory(Long id, Pageable pageable) {
+        return productRepository.findAllByCategoryEntityId(id, pageable);
+    }
 
 }

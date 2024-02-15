@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.services;
 
+import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
@@ -26,4 +27,6 @@ public interface ProductService {
 
 
     Page<ProductEntity> findTop12ByOrderByCountDesc(Pageable pageable);
+
+    Page<ProductEntity> filterByCategory(Long id, Pageable pageable);
 }

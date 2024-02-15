@@ -205,4 +205,11 @@ public Page<ProductDto> listHotProducts(Pageable pageable) {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+//    Фильтр по категориям
+    @PostMapping(path = "/porducts/filter/category/{id}")
+    public Page<ProductDto> filterByCategory(@PathVariable("id") Long id, Pageable pageable) {
+        Page<ProductEntity> products = productService.filterByCategory(id, pageable);
+        return new ResponseEntity<>(products.map(productMapper::mapTo), HttpStatus.OK).getBody();
+    }
+
 }
