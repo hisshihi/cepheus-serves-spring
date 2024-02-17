@@ -12,6 +12,7 @@ import com.example.web.cepheusservice.services.ImageProductService;
 import com.example.web.cepheusservice.services.ProductService;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -96,9 +97,10 @@ public class ProductContoller {
 
     //    Отображение всех товаров
     @GetMapping(path = "/products")
+//    @Cacheable(value = "products")
     public Page<ProductDto> listProducts(Pageable pageable) {
-        Page<ProductEntity> products = productService.findAll(pageable);
-        return products.map(productMapper::mapTo);
+        Page<ProductDto> products = productService.findAll(pageable);
+        return products;
     }
 
 //    Отображение самых популярных товаров
