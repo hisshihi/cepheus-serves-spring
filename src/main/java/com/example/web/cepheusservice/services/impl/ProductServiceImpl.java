@@ -88,10 +88,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductEntity> findTop12ByOrderByCountDesc(Pageable pageable) {
+    public Page<ProductDto> findTop12ByOrderByCountDesc(Pageable pageable) {
 //        return StreamSupport.stream(productRepository.findTop12ByOrderByCountDesc().spliterator(), false).collect(Collectors.toList());
+        Page<ProductEntity> products = productRepository.findByOrderByCountDesc(pageable);
+        return products.map(mapper::mapTo);
 
-        return productRepository.findByOrderByCountDesc(pageable);
+//        return productRepository.findByOrderByCountDesc(pageable);
 
     }
 

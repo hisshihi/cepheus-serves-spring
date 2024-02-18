@@ -109,11 +109,11 @@ public class ProductContoller {
 public Page<ProductDto> listHotProducts(Pageable pageable) {
     // Ограничиваем количество товаров, возвращаемых сервисом
     PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 6);
-    Page<ProductEntity> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
+    Page<ProductDto> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
 
     if (pageable.getPageNumber() > 1) return Page.empty();
 
-    return productsPage.map(productMapper::mapTo);
+    return productsPage;
 }
 
     //    Поиск товара по id
