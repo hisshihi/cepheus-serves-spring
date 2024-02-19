@@ -27,6 +27,7 @@ public interface ProductService {
 
     ProductEntity variableUpdate(Long id, ProductEntity productEntity);
 
+    @CacheEvict(value = "products", allEntries = true)
     void delete(Long id);
 
     List<ProductEntity> findAllList();
