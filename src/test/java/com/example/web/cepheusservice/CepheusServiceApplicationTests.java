@@ -1,32 +1,21 @@
 package com.example.web.cepheusservice;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-//@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CepheusServiceApplicationTests {
 
-	Calculator underTest = new Calculator();
+	@Autowired
+	private TestRestTemplate testRestTemplate;
+
 	@Test
-	void isShouldAddTwoNumbers() {
-
-//		Given
-		int numberOne = 23;
-		int numberTwo = 5;
-
-//		When
-		int result = underTest.add(numberOne, numberTwo);
-
-//		Then
-		assertThat(result).isEqualTo(28);
+	void contextLoads() {
 	}
 
-	class Calculator {
-		public int add(int a, int b) {
-			return a + b;
-		}
-	}
 
 }
