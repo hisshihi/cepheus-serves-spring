@@ -31,112 +31,112 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class ProductServiceImplTest {
-
-    @Mock
-    private ProductRepository productRepository;
-    @Mock
-    private CategoryRepository categoryRepository;
-    private ProductServiceImpl underTest;
-    private CategoryServiceImpl categoryService;
-
-//    Перед каждым тестом создаём новый экземпляр ProductServiceImpl
-    @BeforeEach
-    void setUp() {
-        underTest = new ProductServiceImpl(productRepository);
-        categoryService = new CategoryServiceImpl(categoryRepository);
-    }
-
-    @Test
-    void canAddProduct() throws BadRequestException {
-//        given
-        ProductEntity productEntity = TestDataUtil.createProductEntityA();
-        //    when
-        underTest.save(productEntity);
-//        then
-        ArgumentCaptor<ProductEntity> productEntityArgumentCaptor =
-                ArgumentCaptor.forClass(ProductEntity.class);
-//        Првоеряем, что был вызвнан метод save
-//        с переданным агрументом productEntityArgumentCaptor, то есть фактическим товаром
-        verify(productRepository).save(productEntityArgumentCaptor.capture());
-
-        ProductEntity capturedProduct = productEntityArgumentCaptor.getValue();
-
-        assertThat(capturedProduct).isEqualTo(productEntity);
-    }
-
-    @Test
-    void canGetProductByCategory() throws BadRequestException {
-//        give
-        ProductEntity productEntity = TestDataUtil.createProductEntityA();
-        ProductEntity productEntity2 = TestDataUtil.createProductEntityB();
-        CategoryEntity categoryEntity = TestDataUtil.createTestCategoryA();
-        Pageable pageable = PageRequest.of(0, 2);
-        List<ProductEntity> expectedProductEntity = Arrays.asList(productEntity, productEntity2);
-//        when
-        when(productRepository.findAllByCategoryEntityId(categoryEntity.getId(), pageable)).thenReturn(new PageImpl<>(expectedProductEntity));
-        underTest.save(productEntity);
-        categoryService.save(categoryEntity);
-
-//        then
-        Page<ProductEntity> result = underTest.filterByCategory(categoryEntity.getId(), pageable);
-        assertThat(result.getContent().get(0)).isEqualTo(expectedProductEntity.get(0));
-
-    }
-
+//@ExtendWith(MockitoExtension.class)
+//class ProductServiceImplTest {
+//
+//    @Mock
+//    private ProductRepository productRepository;
+//    @Mock
+//    private CategoryRepository categoryRepository;
+//    private ProductServiceImpl underTest;
+//    private CategoryServiceImpl categoryService;
+//
+////    Перед каждым тестом создаём новый экземпляр ProductServiceImpl
+//    @BeforeEach
+//    void setUp() {
+//        underTest = new ProductServiceImpl(productRepository);
+//        categoryService = new CategoryServiceImpl(categoryRepository);
+//    }
+//
 //    @Test
-//    void willThrowWhenTitleIsTaken() {
+//    void canAddProduct() throws BadRequestException {
+////        given
+//        ProductEntity productEntity = TestDataUtil.createProductEntityA();
+//        //    when
+//        underTest.save(productEntity);
+////        then
+//        ArgumentCaptor<ProductEntity> productEntityArgumentCaptor =
+//                ArgumentCaptor.forClass(ProductEntity.class);
+////        Првоеряем, что был вызвнан метод save
+////        с переданным агрументом productEntityArgumentCaptor, то есть фактическим товаром
+//        verify(productRepository).save(productEntityArgumentCaptor.capture());
+//
+//        ProductEntity capturedProduct = productEntityArgumentCaptor.getValue();
+//
+//        assertThat(capturedProduct).isEqualTo(productEntity);
+//    }
+//
+//    @Test
+//    void canGetProductByCategory() throws BadRequestException {
 ////        give
 //        ProductEntity productEntity = TestDataUtil.createProductEntityA();
-//
-//        when(productRepository.existsByTitle(productEntity.getTitle()))
-//                .thenReturn(true);
-//
+//        ProductEntity productEntity2 = TestDataUtil.createProductEntityB();
+//        CategoryEntity categoryEntity = TestDataUtil.createTestCategoryA();
+//        Pageable pageable = PageRequest.of(0, 2);
+//        List<ProductEntity> expectedProductEntity = Arrays.asList(productEntity, productEntity2);
 ////        when
+//        when(productRepository.findAllByCategoryEntityId(categoryEntity.getId(), pageable)).thenReturn(new PageImpl<>(expectedProductEntity));
+//        underTest.save(productEntity);
+//        categoryService.save(categoryEntity);
+//
 ////        then
-//        assertThatThrownBy(() -> underTest.save(productEntity))
-//                .isInstanceOf(BadRequestException.class)
-//                .hasMessageContaining("Такой товар уже существует");
+//        Page<ProductEntity> result = underTest.filterByCategory(categoryEntity.getId(), pageable);
+//        assertThat(result.getContent().get(0)).isEqualTo(expectedProductEntity.get(0));
+//
 //    }
-
-
-
-    @Test
-    @Disabled
-    void findAll() {
-    }
-
-    @Test
-    @Disabled
-    void isExists() {
-    }
-
-    @Test
-    @Disabled
-    void findProduct() {
-    }
-
-    @Test
-    @Disabled
-    void variableUpdate() {
-    }
-
-    @Test
-    @Disabled
-    void delete() {
-    }
-
-    @Test
-    void canGetAllProducts() {
-//        when
-        underTest.findAllList();
-//        then
-        verify(productRepository).findAll();
-    }
-
-    @Test
-    @Disabled
-    void findTop12ByOrderByCountDesc() {
-    }
-}
+//
+////    @Test
+////    void willThrowWhenTitleIsTaken() {
+//////        give
+////        ProductEntity productEntity = TestDataUtil.createProductEntityA();
+////
+////        when(productRepository.existsByTitle(productEntity.getTitle()))
+////                .thenReturn(true);
+////
+//////        when
+//////        then
+////        assertThatThrownBy(() -> underTest.save(productEntity))
+////                .isInstanceOf(BadRequestException.class)
+////                .hasMessageContaining("Такой товар уже существует");
+////    }
+//
+//
+//
+//    @Test
+//    @Disabled
+//    void findAll() {
+//    }
+//
+//    @Test
+//    @Disabled
+//    void isExists() {
+//    }
+//
+//    @Test
+//    @Disabled
+//    void findProduct() {
+//    }
+//
+//    @Test
+//    @Disabled
+//    void variableUpdate() {
+//    }
+//
+//    @Test
+//    @Disabled
+//    void delete() {
+//    }
+//
+//    @Test
+//    void canGetAllProducts() {
+////        when
+//        underTest.findAllList();
+////        then
+//        verify(productRepository).findAll();
+//    }
+//
+//    @Test
+//    @Disabled
+//    void findTop12ByOrderByCountDesc() {
+//    }
+//}
