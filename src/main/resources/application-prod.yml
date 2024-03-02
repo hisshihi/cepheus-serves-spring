@@ -1,28 +1,26 @@
-#spring:
-#  datasource:
-#    username: postgres
-#    password: fBagD-EC-F-*1cF4b53GGB*db6113G-5
-#    url: jdbc:postgresql://viaduct.proxy.rlwy.net:48967/railway
-#    driver-class-name: org.postgresql.Driver
-#  profiles:
-#    active: prod
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
-#    database: postgresql
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  servlet:
-#    multipart:
-#      max-file-size: 2MB
-#      max-request-size: 2MB
-#  graphql:
-#    cors:
-#      allowed-origins: http://localhost:8081
-#
-#web:
-#  cepheusservice:
-#    secret_key: "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068"
+spring:
+  datasource:
+    username: postgres
+    password: fBagD-EC-F-*1cF4b53GGB*db6113G-5
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:48967/railway
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+  graphql:
+    cors:
+      allowed-origins: http://localhost:8081
+
+web:
+  cepheusservice:
+    secret_key: "7a2357643121767939494e7a4036794c7276623c657936246e442b475a702068"

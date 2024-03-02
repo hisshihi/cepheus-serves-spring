@@ -1,9 +1,12 @@
 package com.example.web.cepheusservice.services.impl;
 
+import com.example.web.cepheusservice.domain.dto.ProductDto;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
+import com.example.web.cepheusservice.mappers.Mapper;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.services.ProductService;
 import org.apache.coyote.BadRequestException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,11 @@ import java.util.stream.StreamSupport;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    private Mapper<ProductEntity, ProductDto> mapper;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, Mapper<ProductEntity, ProductDto> mapper) {
         this.productRepository = productRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -38,12 +43,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(productEntity);
     }
 
-
-
-
     @Override
-    public Page<ProductEntity> findAll(Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public Page<ProductDto> findAll(Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findAll(pageable);
+        return products.map(mapper::mapTo);
     }
 
     @Override
@@ -85,12 +88,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductEntity> findTop12ByOrderByCountDesc(Pageable pageable) {
+    public Page<ProductDto> findTop12ByOrderByCountDesc(Pageable pageable) {
 //        return StreamSupport.stream(productRepository.findTop12ByOrderByCountDesc().spliterator(), false).collect(Collectors.toList());
+        Page<ProductEntity> products = productRepository.findByOrderByCountDesc(pageable);
+        return products.map(mapper::mapTo);
 
-        return productRepository.findByOrderByCountDesc(pageable);
+//        return productRepository.findByOrderByCountDesc(pageable);
 
     }
 
+    @Override
+    public Page<ProductEntity> filterByCategory(Long id, Pageable pageable) {
+        return productRepository.findAllByCategoryEntityId(id, pageable);
+    }
 
 }

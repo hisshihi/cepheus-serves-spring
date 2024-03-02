@@ -12,6 +12,7 @@ import com.example.web.cepheusservice.services.ImageProductService;
 import com.example.web.cepheusservice.services.ProductService;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -96,9 +97,10 @@ public class ProductContoller {
 
     //    Отображение всех товаров
     @GetMapping(path = "/products")
+//    @Cacheable(value = "products")
     public Page<ProductDto> listProducts(Pageable pageable) {
-        Page<ProductEntity> products = productService.findAll(pageable);
-        return products.map(productMapper::mapTo);
+        Page<ProductDto> products = productService.findAll(pageable);
+        return products;
     }
 
 //    Отображение самых популярных товаров
@@ -107,11 +109,11 @@ public class ProductContoller {
 public Page<ProductDto> listHotProducts(Pageable pageable) {
     // Ограничиваем количество товаров, возвращаемых сервисом
     PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 6);
-    Page<ProductEntity> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
+    Page<ProductDto> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
 
     if (pageable.getPageNumber() > 1) return Page.empty();
 
-    return productsPage.map(productMapper::mapTo);
+    return productsPage;
 }
 
     //    Поиск товара по id
@@ -203,6 +205,14 @@ public Page<ProductDto> listHotProducts(Pageable pageable) {
     public ResponseEntity deleteProduct(@PathVariable("id") Long id) {
         productService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+//    Фильтр по категориям
+    @GetMapping(path = "/porducts/filter/category/{id}")
+    @Transactional
+    public Page<ProductDto> filterByCategory(@PathVariable("id") Long id, Pageable pageable) {
+        Page<ProductEntity> products = productService.filterByCategory(id, pageable);
+        return new ResponseEntity<>(products.map(productMapper::mapTo), HttpStatus.OK).getBody();
     }
 
 }
