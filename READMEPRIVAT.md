@@ -1,6 +1,6 @@
 spring_profiles_active=prod
 PROD_DB_HOST=viaduct.proxy.rlwy.net
-PROD_DB_PORT=48967
+PROD_DB_PORT=47714
 PROD_DB_NAME=railway
-PROD_DB_PASSWORD=fBagD-EC-F-*1cF4b53GGB*db6113G-5
+PROD_DB_PASSWORD=4dEbFEea31bGE*cG3FB*1BD*DEGefD43
 PROD_DB_USERNAME=postgres
