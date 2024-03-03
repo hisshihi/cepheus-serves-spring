@@ -13,9 +13,5 @@ class CepheusServiceApplicationTests {
 	@Autowired
 	private TestRestTemplate testRestTemplate;
 
-	@Test
-	void contextLoads() {
-	}
-
 
 }
