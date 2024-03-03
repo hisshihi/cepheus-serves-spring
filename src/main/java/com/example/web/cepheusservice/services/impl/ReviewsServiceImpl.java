@@ -7,6 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewsServiceImpl implements ReviewsService {
@@ -16,5 +20,10 @@ public class ReviewsServiceImpl implements ReviewsService {
     @Override
     public ReviewsEntity save(ReviewsEntity reviewsEntity) {
         return reviewsRepository.save(reviewsEntity);
+    }
+
+    @Override
+    public List<ReviewsEntity> findAllReviews() {
+        return StreamSupport.stream(reviewsRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 }

@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Data
@@ -19,13 +21,17 @@ public class ReviewsEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String text;
+    @Column(length = 5)
+    private int rating;
     private int likeCount;
     private int dislikeCount;
-    @CreatedDate
+    @CreationTimestamp
     private Date date;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
-
-
+    public void setCreationDate() {
+        this.date = Date.from(Instant.now());
+    }
 }

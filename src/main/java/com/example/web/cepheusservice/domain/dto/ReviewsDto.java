@@ -21,6 +21,7 @@ public class ReviewsDto  {
 
     private Long id;
     private String text;
+    private int rating;
     private int likeCount;
     private int dislikeCount;
 
