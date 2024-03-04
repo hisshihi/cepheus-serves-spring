@@ -19,7 +19,7 @@ spring:
       max-request-size: 2MB
   graphql:
     cors:
-      allowed-origins: https://cepheus-service.netlify.app
+      allowed-origins: https://master--cepheus-service.netlify.app
 
 web:
   cepheusservice:
