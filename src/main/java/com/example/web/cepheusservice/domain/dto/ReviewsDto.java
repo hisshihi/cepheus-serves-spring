@@ -26,6 +26,7 @@ public class ReviewsDto  {
     private int dislikeCount;
 
     private Date date;
+    private String formattedDate;
 
     private UserEntity user;
 

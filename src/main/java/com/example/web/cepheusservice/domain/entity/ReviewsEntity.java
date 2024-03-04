@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -26,12 +27,13 @@ public class ReviewsEntity {
     private int likeCount;
     private int dislikeCount;
     @CreationTimestamp
-    private Date date;
+    private LocalDateTime date;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity user;
+    private String formattedDate;
 
     public void setCreationDate() {
-        this.date = Date.from(Instant.now());
+        this.date = LocalDateTime.from(Instant.now());
     }
 }
