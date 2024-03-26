@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: postgres
-    password: fBagD-EC-F-*1cF4b53GGB*db6113G-5
-    url: jdbc:postgresql://viaduct.proxy.rlwy.net:48967/railway
+    password: 2DECD2B-b54-31bEA442c1eDGBC1A6ED
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:37487/railway
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -19,7 +19,7 @@ spring:
       max-request-size: 2MB
   graphql:
     cors:
-      allowed-origins: http://localhost:8081
+      allowed-origins: https://master--cepheus-service.netlify.app
 
 web:
   cepheusservice:

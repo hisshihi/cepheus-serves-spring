@@ -29,13 +29,16 @@ public class SecurityConfig {
 //    Этот метод отвечает за конфигурацию цепочки фильтров безопасности.
 //    Цепочка фильтров безопасности - это серия фильтров, которые вызываются для обработки HTTP-запросов и ответов.
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        System.out.println("WORKING!");
         httpSecurity
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/*", "/register", "/authenticate", "/products") // Главная страница, страница авторизации и регистрации
+                .requestMatchers("/", "/register", "/authenticate", "/products") // Главная страница, страница авторизации и регистрации
                 .permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/{id}")
+                .permitAll()
+                .requestMatchers(HttpMethod.GET, "/reviews")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -103,18 +103,18 @@ public class ProductContoller {
         return products;
     }
 
-//    Отображение самых популярных товаров
-@GetMapping(path = "/products/hot")
-@Transactional
-public Page<ProductDto> listHotProducts(Pageable pageable) {
-    // Ограничиваем количество товаров, возвращаемых сервисом
-    PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 6);
-    Page<ProductDto> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
+    //    Отображение самых популярных товаров
+    @GetMapping(path = "/products/hot")
+    @Transactional
+    public Page<ProductDto> listHotProducts(Pageable pageable) {
+        // Ограничиваем количество товаров, возвращаемых сервисом
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), 6);
+        Page<ProductDto> productsPage = productService.findTop12ByOrderByCountDesc(pageRequest);
 
-    if (pageable.getPageNumber() > 1) return Page.empty();
+        if (pageable.getPageNumber() > 1) return Page.empty();
 
-    return productsPage;
-}
+        return productsPage;
+    }
 
     //    Поиск товара по id
     @GetMapping(path = "/products/{id}")

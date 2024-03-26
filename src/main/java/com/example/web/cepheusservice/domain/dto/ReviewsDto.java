@@ -21,10 +21,12 @@ public class ReviewsDto  {
 
     private Long id;
     private String text;
+    private int rating;
     private int likeCount;
     private int dislikeCount;
 
     private Date date;
+    private String formattedDate;
 
     private UserEntity user;
 

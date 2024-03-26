@@ -1,5 +1,7 @@
 package com.example.web.cepheusservice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +34,11 @@ public class UserEntity implements UserDetails {
     private String password;
 
     private String token;
+
+    @JsonCreator
+    public UserEntity(@JsonProperty("id") Long id) {
+        this.id = id;
+    }
 
 //    Сообщаем, что это класс перечисления
     @Enumerated(EnumType.STRING)
