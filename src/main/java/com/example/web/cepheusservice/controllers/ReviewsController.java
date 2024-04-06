@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,17 +28,18 @@ public class ReviewsController {
     private final UserServise userServise;
 
     @PostMapping("/reviews")
-    private ResponseEntity<ReviewsDto> save(@RequestBody ReviewsDto reviewsDto) {
-        Long userId = reviewsDto.getUser().getId();
-        Optional<UserEntity> user = userServise.findUserById(userId);
-        if (user.isPresent()) {
-            reviewsDto.setUser(user.get());
+    private ResponseEntity<String> save(@RequestBody ReviewsDto reviewsDto, Principal principal, UriComponentsBuilder ucb) {
+        String userEmail = principal.getName();
+        UserEntity user = userServise.findUserByEmail(userEmail);
+        if (user != null) {
+            reviewsDto.setUser(user);
             ReviewsEntity reviewsEntity = reviewsMapper.mapFrom(reviewsDto);
-            reviewsEntity.setUser(user.get());
+            reviewsEntity.setUser(user);
             ReviewsEntity newReviewsEntity = reviewsService.save(reviewsEntity);
-            return new ResponseEntity<>(reviewsMapper.mapTo(newReviewsEntity), HttpStatus.CREATED);
+            URI locationOfNewRewiew = ucb.path("/reviews/{id}").buildAndExpand(newReviewsEntity.getId()).toUri();
+            return ResponseEntity.created(locationOfNewRewiew).build();
         } else {
-            throw new UserAlreadyExistsException("User not found with id: " + userId);
+            throw new UserAlreadyExistsException("User not found with id: " + userEmail);
         }
     }
 
