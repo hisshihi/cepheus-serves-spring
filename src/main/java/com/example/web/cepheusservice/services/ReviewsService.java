@@ -8,4 +8,6 @@ public interface ReviewsService {
     ReviewsEntity save(ReviewsEntity reviewsEntity);
 
     List<ReviewsEntity> findAllReviews();
+
+    List<ReviewsEntity> findREviewsByUserId(Long id);
 }

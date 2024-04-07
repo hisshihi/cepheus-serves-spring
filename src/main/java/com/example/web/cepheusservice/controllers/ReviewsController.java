@@ -49,4 +49,15 @@ public class ReviewsController {
         return reviewsEntities.stream().map(reviewsMapper::mapTo).collect(Collectors.toList());
     }
 
+//    Провверка написал ли пользователь отзыв
+    @GetMapping("/reviews/exists")
+    private Boolean getReviewsUser(Principal principal) {
+        String userEmail = principal.getName();
+        UserEntity user = userServise.findUserByEmail(userEmail);
+        List<ReviewsEntity> userExists = reviewsService.findREviewsByUserId(user.getId());
+        if (!userExists.isEmpty()) {
+            return true;
+        } else return false;
+    }
+
 }

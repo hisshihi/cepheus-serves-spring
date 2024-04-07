@@ -29,4 +29,9 @@ public class ReviewsServiceImpl implements ReviewsService {
         return StreamSupport.stream(reviewsRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
+    @Override
+    public List<ReviewsEntity> findREviewsByUserId(Long id) {
+        return StreamSupport.stream(reviewsRepository.findByUserId(id).spliterator(), false).collect(Collectors.toList());
+    }
+
 }
