@@ -31,6 +31,9 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String email;
     private String phone;
+
+    private String address;
+
     private String password;
 
     private String token;

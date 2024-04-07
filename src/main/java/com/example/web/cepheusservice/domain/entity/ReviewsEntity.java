@@ -21,6 +21,7 @@ public class ReviewsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(length = 1000)
     private String text;
     @Column(length = 5)
     private int rating;
