@@ -19,5 +19,9 @@ public class RegisterRequest {
     private String address;
 
     private String password;
+    private boolean inOrganization;
+    private String orgName;
+    private String orgAddress;
+    private long orgINN;
 
 }

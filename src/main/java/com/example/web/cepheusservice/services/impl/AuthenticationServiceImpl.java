@@ -50,6 +50,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .phone(request.getPhone())
                 .address(request.getAddress())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .inOrganization(request.isInOrganization())
+                .orgName(request.getOrgName())
+                .orgAddress(request.getOrgAddress())
+                .orgINN(request.getOrgINN())
                 .role(Role.USER)
                 .build();
 

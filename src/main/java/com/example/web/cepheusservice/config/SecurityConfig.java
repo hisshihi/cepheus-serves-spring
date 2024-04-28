@@ -29,7 +29,6 @@ public class SecurityConfig {
 //    Этот метод отвечает за конфигурацию цепочки фильтров безопасности.
 //    Цепочка фильтров безопасности - это серия фильтров, которые вызываются для обработки HTTP-запросов и ответов.
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        System.out.println("WORKING!");
         httpSecurity
                 .csrf()
                 .disable()

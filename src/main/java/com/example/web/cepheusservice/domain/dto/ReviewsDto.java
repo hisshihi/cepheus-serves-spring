@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -25,8 +26,7 @@ public class ReviewsDto  {
     private int likeCount;
     private int dislikeCount;
 
-    private Date date;
-    private String formattedDate;
+    private LocalDateTime created_at;
 
     private UserEntity user;
 

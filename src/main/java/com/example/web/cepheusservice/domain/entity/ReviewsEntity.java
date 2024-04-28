@@ -6,9 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Data
@@ -27,14 +31,12 @@ public class ReviewsEntity {
     private int rating;
     private int likeCount;
     private int dislikeCount;
+
     @CreationTimestamp
-    private LocalDateTime date;
+    private LocalDateTime created_at;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    private String formattedDate;
 
-    public void setCreationDate() {
-        this.date = LocalDateTime.from(Instant.now());
-    }
 }

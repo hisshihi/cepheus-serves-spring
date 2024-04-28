@@ -38,6 +38,11 @@ public class UserEntity implements UserDetails {
 
     private String token;
 
+    private boolean inOrganization;
+    private String orgName;
+    private String orgAddress;
+    private long orgINN;
+
     @JsonCreator
     public UserEntity(@JsonProperty("id") Long id) {
         this.id = id;
