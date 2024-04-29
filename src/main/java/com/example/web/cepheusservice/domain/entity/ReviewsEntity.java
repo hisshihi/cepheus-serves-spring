@@ -29,8 +29,8 @@ public class ReviewsEntity {
     private String text;
     @Column(length = 5)
     private int rating;
-    private int likeCount;
-    private int dislikeCount;
+//    private int likeCount;
+//    private int dislikeCount;
 
     @CreationTimestamp
     private LocalDateTime created_at;
