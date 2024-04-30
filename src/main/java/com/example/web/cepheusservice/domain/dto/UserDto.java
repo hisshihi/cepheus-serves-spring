@@ -21,9 +21,12 @@ public class UserDto {
     private String email;
     private String phone;
     private String address;
-    private String password;
+    private boolean inOrganization;
+    private String orgName;
+    private String orgAddress;
+    private long orgINN;
     private String token;
 
-    private Role role;
+//    private Role role;
 
 }
