@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class ImageProductServiceImpl implements ImageProductService {
@@ -43,6 +44,18 @@ public class ImageProductServiceImpl implements ImageProductService {
     @Override
     public void deleteImage(Long id) {
         imageProductRepository.deleteById(id);
+    }
+
+    @Override
+    public ImageProductEntity updateImage(MultipartFile multipartFile, Long id) throws IOException {
+        Optional<ProductEntity> productEntity = productService.findProduct(id);
+        ImageProductEntity imageProductEntity = imageProductRepository.findByProductEntity(productEntity.get());
+        imageProductEntity.setBytes(multipartFile.getBytes());
+        imageProductEntity.setSize(multipartFile.getSize());
+        imageProductEntity.setName(multipartFile.getName());
+        imageProductEntity.setContentType(multipartFile.getContentType());
+        imageProductEntity.setOriginalFileName(multipartFile.getOriginalFilename());
+        return imageProductRepository.save(imageProductEntity);
     }
 
 

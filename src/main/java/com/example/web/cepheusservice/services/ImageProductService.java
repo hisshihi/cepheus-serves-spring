@@ -12,5 +12,5 @@ public interface ImageProductService {
     void deleteImage(Long id);
 
 
-
+    ImageProductEntity updateImage(MultipartFile multipartFile, Long id) throws IOException;
 }

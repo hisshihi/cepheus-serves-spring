@@ -16,5 +16,6 @@ public class SliderDto {
     private String name;
     private String title;
     private String text;
+    private String link;
 
 }

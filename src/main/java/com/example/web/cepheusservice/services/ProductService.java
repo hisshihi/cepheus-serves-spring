@@ -25,6 +25,7 @@ public interface ProductService {
 
     Optional<ProductEntity> findProduct(Long id);
 
+    @CacheEvict(value = "products", allEntries = true)
     ProductEntity variableUpdate(Long id, ProductEntity productEntity);
 
     @CacheEvict(value = "products", allEntries = true)

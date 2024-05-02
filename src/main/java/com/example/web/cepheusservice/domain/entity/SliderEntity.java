@@ -25,5 +25,6 @@ public class SliderEntity {
     private String title;
     @Column(columnDefinition = "VARCHAR(2000)")
     private String text;
+    private String link;
 
 }
