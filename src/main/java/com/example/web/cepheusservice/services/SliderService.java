@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface SliderService {
     SliderEntity saveImage(MultipartFile multipartFile, String title, String text) throws IOException;
@@ -12,4 +13,7 @@ public interface SliderService {
     List<SliderEntity> findAll();
 
     void delete(Long id);
+
+
+    boolean isExists(Long id);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,4 +41,11 @@ public class SliderServiceImpl implements SliderService {
     public void delete(Long id) {
         sliderEntityRepository.deleteById(id);
     }
+
+    @Override
+    public boolean isExists(Long id) {
+        return sliderEntityRepository.existsById(id);
+    }
+
+
 }

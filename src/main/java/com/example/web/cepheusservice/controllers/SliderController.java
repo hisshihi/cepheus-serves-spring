@@ -36,10 +36,18 @@ public class SliderController {
         return sliderEntities.stream().map(mapper::mapTo).collect(Collectors.toList());
     }
 
+    @PutMapping(path = "/admin/slider/{id}")
+    private ResponseEntity<String> update(@PathVariable Long id, @RequestBody SliderEntity sliderEntity) {
+        boolean exists = sliderService.isExists(id);
+        if (!exists) return ResponseEntity.notFound().build();
+        System.out.println(sliderEntity);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping(path = "/admin/slider/{id}")
     private ResponseEntity<String> delete(@PathVariable Long id) {
         sliderService.delete(id);
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().build();
     }
 
 }
