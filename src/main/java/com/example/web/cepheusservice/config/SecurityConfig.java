@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.GET, "/reviews")
                 .permitAll()
+                .requestMatchers("slider").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
