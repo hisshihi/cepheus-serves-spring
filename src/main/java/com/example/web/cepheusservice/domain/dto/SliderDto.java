@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SliderDto {
 
+    private Long id;
     private byte[] bytes;
     private String name;
     private String title;

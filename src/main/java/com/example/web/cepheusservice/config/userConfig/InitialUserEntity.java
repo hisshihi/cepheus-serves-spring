@@ -21,6 +21,7 @@ public class InitialUserEntity implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         UserEntity admin = new UserEntity();
         admin.setRole(Role.ADMIN);
         admin.setEmail("admin@gmail.com");
@@ -39,6 +40,10 @@ public class InitialUserEntity implements CommandLineRunner {
         user.setOrgINN(234234234234L);
         user.setPassword(passwordEncoder.encode("123"));
 
-        userRepository.saveAll(List.of(admin, user));
+        if (admin.getEmail().equals(userRepository.findByEmail(admin.getEmail())) || user.getEmail().equals(userRepository.findByEmail(user.getEmail()))) {
+            userRepository.saveAll(List.of(admin, user));
+        }
+
+
     }
 }
