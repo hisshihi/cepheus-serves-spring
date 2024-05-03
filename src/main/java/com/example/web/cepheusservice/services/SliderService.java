@@ -16,4 +16,8 @@ public interface SliderService {
 
 
     boolean isExists(Long id);
+
+    void pathUpdate(Long id, SliderEntity sliderEntity);
+
+    Optional<SliderEntity> findSliderById(Long id);
 }

@@ -191,7 +191,6 @@ public class ProductContoller {
         productEntity.setText(text);
         productEntity.setPrice(price);
 
-        System.out.println("Это id " + categoryId);
 //        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
         if (categoryId != null) {
             CategoryEntity findCategoryEntity = categoryService.findById(categoryId);

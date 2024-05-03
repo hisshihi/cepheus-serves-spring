@@ -3,6 +3,7 @@ package com.example.web.cepheusservice.services.impl;
 import com.example.web.cepheusservice.domain.entity.SliderEntity;
 import com.example.web.cepheusservice.repositories.SliderEntityRepository;
 import com.example.web.cepheusservice.services.SliderService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +46,28 @@ public class SliderServiceImpl implements SliderService {
     @Override
     public boolean isExists(Long id) {
         return sliderEntityRepository.existsById(id);
+    }
+
+    @Override
+    public void pathUpdate(Long id, SliderEntity sliderEntity) {
+        sliderEntity.setId(id);
+        SliderEntity existingSlider = sliderEntityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("SliderEntity not found with id " + id));
+
+        Optional.ofNullable(sliderEntity.getTitle()).ifPresent(existingSlider::setTitle);
+        Optional.ofNullable(sliderEntity.getText()).ifPresent(existingSlider::setText);
+        Optional.ofNullable(sliderEntity.getLink()).ifPresent(existingSlider::setLink);
+        Optional.ofNullable(sliderEntity.getSize()).ifPresent(existingSlider::setSize);
+        Optional.ofNullable(sliderEntity.getName()).ifPresent(existingSlider::setName);
+        Optional.ofNullable(sliderEntity.getBytes()).ifPresent(existingSlider::setBytes);
+        Optional.ofNullable(sliderEntity.getOriginalFileName()).ifPresent(existingSlider::setOriginalFileName);
+        Optional.ofNullable(sliderEntity.getContentType()).ifPresent(existingSlider::setContentType);
+
+        sliderEntityRepository.save(existingSlider);
+    }
+
+    @Override
+    public Optional<SliderEntity> findSliderById(Long id) {
+        return sliderEntityRepository.findById(id);
     }
 
 

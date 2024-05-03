@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
             Optional.ofNullable(productEntity.getCategoryEntity()).ifPresent(existingProduct::setCategoryEntity);
             Optional.ofNullable(productEntity.getImageProductEntity()).ifPresent(existingProduct::setImageProductEntity);
             return productRepository.save(existingProduct);
-        }).orElseThrow(() -> new RuntimeException("Продкут не существует"));
+        }).orElseThrow(() -> new RuntimeException("Продукт не существует"));
     }
 
     @Override
