@@ -8,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
     CategoryEntity save(CategoryEntity categoryEntity);
 
-    CategoryEntity findById(CategoryEntity categoryEntity);
+    CategoryEntity findById(Long id);
 
 
     List<CategoryEntity> findALl();

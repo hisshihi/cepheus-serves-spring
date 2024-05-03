@@ -25,8 +25,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity findById(CategoryEntity categoryEntity) {
-        return categoryRepository.findById(categoryEntity.getId()).orElseThrow(() -> new RuntimeException("Категория не найдена"));
+    public CategoryEntity findById(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Категория не найдена"));
     }
 
     @Override

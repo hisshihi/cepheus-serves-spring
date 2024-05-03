@@ -59,7 +59,7 @@ public class ProductContoller {
     public ResponseEntity<ProductDto> createProduct(@RequestParam("title") String title,
                                                     @RequestParam("text") String text,
                                                     @RequestParam("price") Integer price,
-                                                    @ModelAttribute CategoryDto categoryDto,
+                                                    @RequestParam("category_id") Long categoryId,
                                                     @RequestParam("image") MultipartFile multipartFile) throws IOException {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setTitle(title);
@@ -73,8 +73,8 @@ public class ProductContoller {
         productEntity.setCount(randNumber);
 
         // Получаем экземпляр сущности категории по ID
-        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
-        CategoryEntity foundCategory = categoryService.findById(categoryEntity);
+//        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
+        CategoryEntity foundCategory = categoryService.findById(categoryId);
 
         // Устанавливаем категорию для товара
         productEntity.setCategoryEntity(foundCategory);
@@ -128,49 +128,49 @@ public class ProductContoller {
 
     //    Полное обновление товара
 
-    @PutMapping(path = "products/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id,
-                                                    @RequestParam("title") String title,
-                                                    @RequestParam("text") String text,
-                                                    @RequestParam("price") Integer price,
-                                                    @ModelAttribute CategoryDto categoryDto,
-                                                    @RequestParam("image") MultipartFile multipartFile) throws IOException {
-        if (!productService.isExists(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        // Получаем товар из базы данных
-        ProductEntity productEntity = productService.findProduct(id).orElseThrow(() -> new RuntimeException("Товар с таким id не найден"));
-
-        // Обновляем поля товара
-        productEntity.setTitle(title);
-        productEntity.setText(text);
-        productEntity.setPrice(price);
-
-        // Получаем экземпляр сущности категории по ID
-        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
-        CategoryEntity foundCategory = categoryService.findById(categoryEntity);
-
-        // Устанавливаем категорию для товара
-        productEntity.setCategoryEntity(foundCategory);
-
-        // Сохраняем товар в базу данных
-        ProductEntity savedProductEntity = productService.save(productEntity);
-
-        if (savedProductEntity.getImageProductEntity() != null) {
-            imageProductService.deleteImage(savedProductEntity.getImageProductEntity().getId());
-        }
-
-        // Сохраняем изображение товара
-        ImageProductEntity imageProductEntity = imageProductService.save(multipartFile, savedProductEntity.getId());
-        // Устанавливаем изображение товара
-        productEntity.setImageProductEntity(imageProductEntity);
-
-        // Сохраняем товар с изображением в базу данных
-        savedProductEntity = productService.save(productEntity);
-        return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
-
-    }
+//    @PutMapping(path = "products/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long id,
+//                                                    @RequestParam("title") String title,
+//                                                    @RequestParam("text") String text,
+//                                                    @RequestParam("price") Integer price,
+//                                                    @ModelAttribute CategoryDto categoryDto,
+//                                                    @RequestParam("image") MultipartFile multipartFile) throws IOException {
+//        if (!productService.isExists(id)) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//        // Получаем товар из базы данных
+//        ProductEntity productEntity = productService.findProduct(id).orElseThrow(() -> new RuntimeException("Товар с таким id не найден"));
+//
+//        // Обновляем поля товара
+//        productEntity.setTitle(title);
+//        productEntity.setText(text);
+//        productEntity.setPrice(price);
+//
+//        // Получаем экземпляр сущности категории по ID
+//        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
+//        CategoryEntity foundCategory = categoryService.findById(categoryEntity);
+//
+//        // Устанавливаем категорию для товара
+//        productEntity.setCategoryEntity(foundCategory);
+//
+//        // Сохраняем товар в базу данных
+//        ProductEntity savedProductEntity = productService.save(productEntity);
+//
+//        if (savedProductEntity.getImageProductEntity() != null) {
+//            imageProductService.deleteImage(savedProductEntity.getImageProductEntity().getId());
+//        }
+//
+//        // Сохраняем изображение товара
+//        ImageProductEntity imageProductEntity = imageProductService.save(multipartFile, savedProductEntity.getId());
+//        // Устанавливаем изображение товара
+//        productEntity.setImageProductEntity(imageProductEntity);
+//
+//        // Сохраняем товар с изображением в базу данных
+//        savedProductEntity = productService.save(productEntity);
+//        return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.OK);
+//
+//    }
 
 
     //    Частичное обновление товара
@@ -179,7 +179,7 @@ public class ProductContoller {
                                                             @RequestParam(value = "title", required = false) String title,
                                                             @RequestParam(value = "text", required = false) String text,
                                                             @RequestParam(value = "price", required = false) Integer price,
-                                                            @ModelAttribute CategoryDto categoryDto,
+                                                            @RequestParam(value = "category_id", required = false) Long categoryId,
                                                             @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
         if (!productService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -191,14 +191,14 @@ public class ProductContoller {
         productEntity.setText(text);
         productEntity.setPrice(price);
 
-        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
-        CategoryEntity findCategoryEntity = categoryService.findById(categoryEntity);
+        System.out.println("Это id " + categoryId);
+//        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
+        if (categoryId != null) {
+            CategoryEntity findCategoryEntity = categoryService.findById(categoryId);
+            productEntity.setCategoryEntity(findCategoryEntity);
+        }
 
-        System.out.println(findCategoryEntity);
-
-        productEntity.setCategoryEntity(findCategoryEntity);
         System.out.println(productEntity.getCategoryEntity());
-
 //        Обновление изображения
         if (multipartFile != null) {
             ImageProductEntity imageProductEntity = imageProductService.updateImage(multipartFile, id);
