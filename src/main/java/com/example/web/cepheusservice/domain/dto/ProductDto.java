@@ -1,13 +1,9 @@
 package com.example.web.cepheusservice.domain.dto;
 
-import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -23,5 +19,7 @@ public class ProductDto {
 
     private ImageProductDto imageProductDto;
 
+    private Long countSales;
     private Long count;
+    private String specifications;
 }

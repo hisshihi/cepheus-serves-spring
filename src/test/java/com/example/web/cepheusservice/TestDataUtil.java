@@ -2,9 +2,6 @@ package com.example.web.cepheusservice;
 
 import com.example.web.cepheusservice.domain.entity.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class TestDataUtil {
 
     private TestDataUtil() {
@@ -40,7 +37,7 @@ public class TestDataUtil {
                 .price(19000)
                 .categoryEntity(createTestCategoryA())
                 .imageProductEntity(null)
-                .count(100L)
+                .countSales(100L)
                 .build();
     }
 
@@ -52,7 +49,7 @@ public class TestDataUtil {
                 .price(20000)
                 .categoryEntity(createTestCategoryB())
                 .imageProductEntity(null)
-                .count(300L)
+                .countSales(300L)
                 .build();
     }
 

@@ -7,7 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 
 @Data
@@ -36,7 +37,11 @@ public class ProductEntity {
     @JoinColumn(name = "image_id")
     private ImageProductEntity imageProductEntity;
     @Lob
+    private Long countSales;
     private Long count;
+    @Column(columnDefinition = "VARCHAR(2000)")
+    private String specifications;
+
 //    Создаём новое поле, чтобы указывать изображение для превью
 //    private Long previewImageId;
 

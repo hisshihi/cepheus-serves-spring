@@ -1,6 +1,5 @@
 package com.example.web.cepheusservice.controllers;
 
-import com.example.web.cepheusservice.domain.dto.CategoryDto;
 import com.example.web.cepheusservice.domain.dto.ProductDto;
 import com.example.web.cepheusservice.domain.entity.CategoryEntity;
 import com.example.web.cepheusservice.domain.entity.ImageProductEntity;
@@ -12,9 +11,7 @@ import com.example.web.cepheusservice.services.ImageProductService;
 import com.example.web.cepheusservice.services.ProductService;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.transaction.Transactional;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,10 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @MultipartConfig
@@ -54,23 +48,28 @@ public class ProductContoller {
     }
 
     //    Создание нового товара
-    @PostMapping(path = "products", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(path = "products", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> createProduct(@RequestParam("title") String title,
                                                     @RequestParam("text") String text,
                                                     @RequestParam("price") Integer price,
                                                     @RequestParam("category_id") Long categoryId,
+                                                    @RequestParam("specifications") String specifications,
                                                     @RequestParam("image") MultipartFile multipartFile) throws IOException {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setTitle(title);
         productEntity.setText(text);
         productEntity.setPrice(price);
+        productEntity.setSpecifications(specifications);
 
 //        Заполняю count случайными числами при создании
         Random random = new Random();
-        Long randNumber = random.nextLong(2000L);
+        Long randNumberSales = random.nextLong(2000L);
 
-        productEntity.setCount(randNumber);
+        productEntity.setCountSales(randNumberSales);
+
+        Long randNumberCount = random.nextLong(100L);
+        productEntity.setCount(randNumberCount);
 
         // Получаем экземпляр сущности категории по ID
 //        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
@@ -90,6 +89,9 @@ public class ProductContoller {
 
         // Сохраняем товар с изображением в базу данных
         savedProductEntity = productService.save(productEntity);
+
+        //        Характериситики
+
 
         return new ResponseEntity<>(productMapper.mapTo(savedProductEntity), HttpStatus.CREATED);
     }
