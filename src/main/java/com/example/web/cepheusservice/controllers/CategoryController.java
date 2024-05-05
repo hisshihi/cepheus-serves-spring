@@ -41,10 +41,22 @@ public class CategoryController {
         return categories.stream().map(categoryMapper::mapTo).collect(Collectors.toList());
     }
 
+//    Поиск категории по id
+    @GetMapping("category/{id}")
+    private ResponseEntity<CategoryDto> findCategoryById(@PathVariable("id") Long id) {
+        if (!categoryService.isExists(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CategoryEntity categoryEntity = categoryService.findById(id);
+        CategoryDto categoryDto = categoryMapper.mapTo(categoryEntity);
+        return ResponseEntity.ok(categoryDto);
+    }
+
 //    Обновление категории
     @PutMapping(path = "category/{id}")
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable("id") Long id, @RequestBody CategoryDto categoryDto) {
-        if (!productService.isExists(id)) {
+        if (!categoryService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

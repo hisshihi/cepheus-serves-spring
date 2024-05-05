@@ -14,4 +14,6 @@ public interface CategoryService {
     List<CategoryEntity> findALl();
 
     void delete(Long id);
+
+    boolean isExists(Long id);
 }

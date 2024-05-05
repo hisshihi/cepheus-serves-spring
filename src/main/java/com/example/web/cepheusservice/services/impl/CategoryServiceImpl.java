@@ -39,5 +39,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(id);
     }
 
+    @Override
+    public boolean isExists(Long id) {
+        return categoryRepository.existsById(id);
+    }
+
 
 }
