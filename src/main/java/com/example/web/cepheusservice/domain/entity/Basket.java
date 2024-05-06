@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class Basket {
     @ManyToOne
     @JoinColumn(name = "user_link")
     private UserEntity user;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_link")
     private ProductEntity product;

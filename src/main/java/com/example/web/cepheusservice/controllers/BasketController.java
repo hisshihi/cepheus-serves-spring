@@ -4,14 +4,12 @@ import com.example.web.cepheusservice.domain.entity.Basket;
 import com.example.web.cepheusservice.services.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +24,13 @@ public class BasketController {
 
         URI location = ucb.path("/basket/{id}").buildAndExpand(savedBasket.getId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+//    Метод определения есть ли товар в коризне или нет
+    @GetMapping("/basket/in-basket")
+    private ResponseEntity<List<Basket>> getProductInBasket(Principal principal) {
+        List<Basket> baskets = basketService.findProduct(principal);
+        return ResponseEntity.ok(baskets);
     }
 
 }

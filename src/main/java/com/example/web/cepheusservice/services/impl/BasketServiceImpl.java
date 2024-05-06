@@ -7,11 +7,15 @@ import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.repositories.UserRepository;
 import com.example.web.cepheusservice.services.BasketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +36,13 @@ public class BasketServiceImpl implements BasketService {
                 .product(productRepository.findById(basket.getProductId()).orElseThrow(() -> new ExpressionException("Товар не найден")))
                 .build();
         return basketRepository.save(savedBasket);
+    }
+
+    @Override
+    public List<Basket> findProduct(Principal principal) {
+        Optional<UserEntity> user = userRepository.findByEmail(principal.getName());
+
+        return basketRepository.findAllProductIdByUserId(user.get().getId());
+
     }
 }
