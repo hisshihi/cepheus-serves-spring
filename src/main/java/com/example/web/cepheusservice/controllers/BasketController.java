@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,11 +20,9 @@ public class BasketController {
     private final BasketService basketService;
 
     @PostMapping("/basket")
-    private ResponseEntity<String> saveAll(@RequestBody Basket basket, UriComponentsBuilder ucb) {
+    private ResponseEntity<String> saveAll(@RequestBody Basket basket, UriComponentsBuilder ucb, Principal principal) {
 
-        System.out.println(basket);
-
-        Basket savedBasket = basketService.save(basket);
+        Basket savedBasket = basketService.save(basket, principal);
 
         URI location = ucb.path("/basket/{id}").buildAndExpand(savedBasket.getId()).toUri();
         return ResponseEntity.created(location).build();
