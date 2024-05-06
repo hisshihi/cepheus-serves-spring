@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/register", "/authenticate", "/products", "/basket") // Главная страница, страница авторизации и регистрации
+                .requestMatchers("/", "/register", "/authenticate", "/products") // Главная страница, страница авторизации и регистрации
                 .permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/{id}")
                 .permitAll()
