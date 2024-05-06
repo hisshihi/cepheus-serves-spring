@@ -1,6 +1,7 @@
 package com.example.web.cepheusservice.controllers;
 
 import com.example.web.cepheusservice.domain.dto.SliderDto;
+import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.domain.entity.SliderEntity;
 import com.example.web.cepheusservice.mappers.Mapper;
 import com.example.web.cepheusservice.mappers.impl.SliderMapper;
@@ -10,8 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,9 +30,13 @@ public class SliderController {
     @PostMapping(path = "/admin/slider")
     ResponseEntity<String> saveSliderImage(@RequestParam("image") MultipartFile multipartFile,
                                            @RequestParam("title") String title,
-                                           @RequestParam("text") String text) throws IOException {
-        sliderService.saveImage(multipartFile, title, text);
-        return ResponseEntity.ok().build();
+                                           @RequestParam("text") String text,
+                                           @RequestParam("link") Long link,
+                                           UriComponentsBuilder ucb
+                                           ) throws IOException {
+        SliderEntity sliderEntity = sliderService.saveImage(multipartFile, title, text, link);
+        URI localtionOfNewCashCard = ucb.path("/admin/slider/{id}").buildAndExpand(sliderEntity.getId()).toUri();
+        return ResponseEntity.created(localtionOfNewCashCard).build();
     }
 
     @GetMapping(path = "/slider")
@@ -57,7 +64,7 @@ public class SliderController {
             @PathVariable(value = "id", required = false) Long id,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "text", required = false) String text,
-            @RequestParam(value = "link", required = false) String link,
+            @RequestParam(value = "link", required = false) Long link,
             @RequestParam(value = "image", required = false) MultipartFile file
     ) throws IOException {
         if (!sliderService.isExists(id)) {
@@ -72,7 +79,7 @@ public class SliderController {
             sliderEntity.setText(text);
         }
         if (link!= null) {
-            sliderEntity.setLink(link);
+            sliderEntity.setLink_id(link);
         }
         if (file!= null) {
             sliderEntity.setName(file.getName());

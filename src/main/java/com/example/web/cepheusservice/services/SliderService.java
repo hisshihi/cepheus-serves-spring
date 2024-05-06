@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.services;
 
+import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.domain.entity.SliderEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SliderService {
-    SliderEntity saveImage(MultipartFile multipartFile, String title, String text) throws IOException;
+    SliderEntity saveImage(MultipartFile multipartFile, String title, String text, Long link) throws IOException;
 
     List<SliderEntity> findAll();
 

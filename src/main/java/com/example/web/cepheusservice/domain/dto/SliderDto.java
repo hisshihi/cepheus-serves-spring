@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.domain.dto;
 
+import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,6 @@ public class SliderDto {
     private String name;
     private String title;
     private String text;
-    private String link;
+    private Long link_id;
 
 }

@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.services.impl;
 
+import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.domain.entity.SliderEntity;
 import com.example.web.cepheusservice.repositories.SliderEntityRepository;
 import com.example.web.cepheusservice.services.SliderService;
@@ -19,7 +20,7 @@ public class SliderServiceImpl implements SliderService {
     private final SliderEntityRepository sliderEntityRepository;
 
     @Override
-    public SliderEntity saveImage(MultipartFile multipartFile, String title, String text) throws IOException {
+    public SliderEntity saveImage(MultipartFile multipartFile, String title, String text, Long link) throws IOException {
         SliderEntity sliderEntity = new SliderEntity();
         sliderEntity.setSize(multipartFile.getSize());
         sliderEntity.setName(multipartFile.getName());
@@ -29,6 +30,7 @@ public class SliderServiceImpl implements SliderService {
 
         sliderEntity.setTitle(title);
         sliderEntity.setText(text);
+        sliderEntity.setLink_id(link);
         sliderEntityRepository.save(sliderEntity);
         return sliderEntity;
     }
@@ -55,7 +57,7 @@ public class SliderServiceImpl implements SliderService {
 
         Optional.ofNullable(sliderEntity.getTitle()).ifPresent(existingSlider::setTitle);
         Optional.ofNullable(sliderEntity.getText()).ifPresent(existingSlider::setText);
-        Optional.ofNullable(sliderEntity.getLink()).ifPresent(existingSlider::setLink);
+        Optional.ofNullable(sliderEntity.getLink_id()).ifPresent(existingSlider::setLink_id);
         Optional.ofNullable(sliderEntity.getSize()).ifPresent(existingSlider::setSize);
         Optional.ofNullable(sliderEntity.getName()).ifPresent(existingSlider::setName);
         Optional.ofNullable(sliderEntity.getBytes()).ifPresent(existingSlider::setBytes);
