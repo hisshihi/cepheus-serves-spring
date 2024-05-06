@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.auth;
 
+import com.example.web.cepheusservice.domain.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class RegisterRequest {
     private String orgName;
     private String orgAddress;
     private long orgINN;
+    private Role role;
 
 }

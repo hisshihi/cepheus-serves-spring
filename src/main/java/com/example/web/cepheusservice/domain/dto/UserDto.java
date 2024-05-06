@@ -27,6 +27,6 @@ public class UserDto {
     private long orgINN;
     private String token;
 
-//    private Role role;
+    private Role role;
 
 }

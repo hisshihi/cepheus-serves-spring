@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -40,10 +41,12 @@ public class InitialUserEntity implements CommandLineRunner {
         user.setOrgINN(234234234234L);
         user.setPassword(passwordEncoder.encode("123"));
 
-        if (admin.getEmail().equals(userRepository.findByEmail(admin.getEmail())) || user.getEmail().equals(userRepository.findByEmail(user.getEmail()))) {
+
+        Optional<UserEntity> userAdmin = userRepository.findByEmail(admin.getEmail());
+        Optional<UserEntity> userUser = userRepository.findByEmail(user.getEmail());
+        if (!userAdmin.isPresent() && !userUser.isPresent()) {
             userRepository.saveAll(List.of(admin, user));
         }
-
 
     }
 }
