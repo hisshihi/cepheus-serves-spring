@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
             Optional.ofNullable(productEntity.getPrice()).ifPresent(existingProduct::setPrice);
             Optional.ofNullable(productEntity.getCategoryEntity()).ifPresent(existingProduct::setCategoryEntity);
             Optional.ofNullable(productEntity.getImageProductEntity()).ifPresent(existingProduct::setImageProductEntity);
+            Optional.ofNullable(productEntity.getSpecifications()).ifPresent(existingProduct::setSpecifications);
             return productRepository.save(existingProduct);
         }).orElseThrow(() -> new RuntimeException("Продукт не существует"));
     }

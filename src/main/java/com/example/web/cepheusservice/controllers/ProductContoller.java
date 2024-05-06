@@ -182,6 +182,7 @@ public class ProductContoller {
                                                             @RequestParam(value = "text", required = false) String text,
                                                             @RequestParam(value = "price", required = false) Integer price,
                                                             @RequestParam(value = "category_id", required = false) Long categoryId,
+                                                            @RequestParam(value = "specifications", required = false) String specifications,
                                                             @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
         if (!productService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -192,6 +193,8 @@ public class ProductContoller {
         productEntity.setTitle(title);
         productEntity.setText(text);
         productEntity.setPrice(price);
+        productEntity.setSpecifications(specifications);
+        System.out.println(productEntity.getSpecifications());
 
 //        CategoryEntity categoryEntity = categoryMapper.mapFrom(categoryDto);
         if (categoryId != null) {
@@ -199,7 +202,6 @@ public class ProductContoller {
             productEntity.setCategoryEntity(findCategoryEntity);
         }
 
-        System.out.println(productEntity.getCategoryEntity());
 //        Обновление изображения
         if (multipartFile != null) {
             ImageProductEntity imageProductEntity = imageProductService.updateImage(multipartFile, id);
