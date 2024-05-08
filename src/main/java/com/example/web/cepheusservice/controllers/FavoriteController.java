@@ -26,11 +26,4 @@ public class FavoriteController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping(path = "/in-favorite")
-    private ResponseEntity<List<Favorite>> findAll(Principal principal) {
-        List<Favorite> favorites = favoriteService.findAll(principal);
-
-        return ResponseEntity.ok(favorites);
-    }
-
 }

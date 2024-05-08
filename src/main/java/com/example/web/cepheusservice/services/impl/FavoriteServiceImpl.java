@@ -24,21 +24,19 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public Favorite save(Favorite favorite, Principal principal) {
-        Optional<UserEntity> findUser = userRepository.findByEmail(principal.getName());
+        Optional<UserEntity> userEntity = userRepository.findByEmail(principal.getName());
+
+        if (!userEntity.isPresent()) {
+            throw new ExpressionException("Пользователь не найден");
+        }
 
         Favorite savedFavorite = Favorite.builder()
-                .userId(findUser.get().getId())
+                .userId(userEntity.get().getId())
                 .productId(favorite.getProductId())
-                .user(userRepository.findById(findUser.get().getId()).orElseThrow(() -> new ExpressionException("Пользователь не найден")))
+                .user(userRepository.findById(userEntity.get().getId()).orElseThrow(() -> new ExpressionException("Пользователь не найден")))
                 .product(productRepository.findById(favorite.getProductId()).orElseThrow(() -> new ExpressionException("Товар не найден")))
                 .build();
         return favoriteRepository.save(savedFavorite);
     }
 
-    @Override
-    public List<Favorite> findAll(Principal principal) {
-        Optional<UserEntity> user = userRepository.findByEmail(principal.getName());
-
-        return favoriteRepository.findAllProductIdByUserId(user.get().getId());
-    }
 }

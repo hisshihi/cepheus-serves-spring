@@ -19,9 +19,9 @@ public class Favorite {
     private Long id;
     private Long userId;
     private Long productId;
-    private Long count;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(nullable = false, name = "user_link")
     private UserEntity user;
 
