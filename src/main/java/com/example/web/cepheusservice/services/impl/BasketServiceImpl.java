@@ -9,6 +9,7 @@ import com.example.web.cepheusservice.services.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -22,19 +23,35 @@ public class BasketServiceImpl implements BasketService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public Basket save(Basket basket, Principal principal) {
         Optional<UserEntity> userEntity = userRepository.findByEmail(principal.getName());
 
+        if (!userEntity.isPresent()) {
+            throw new ExpressionException("Пользователь не найден");
+        }
 
+        Long userId = userEntity.get().getId();
+        Long productId = basket.getProductId();
 
-        Basket savedBasket = Basket.builder()
-                .userId(userEntity.get().getId())
-                .productId(basket.getProductId())
-                .count(1L)
-                .user(userRepository.findById(userEntity.get().getId()).orElseThrow(() -> new ExpressionException("Пользователь не найден")))
-                .product(productRepository.findById(basket.getProductId()).orElseThrow(() -> new ExpressionException("Товар не найден")))
-                .build();
-        return basketRepository.save(savedBasket);
+//        Пытаемся найти существующую запись в корзине
+        Optional<Basket> existingBasket = basketRepository.findByUserIdAndProductId(userId, productId);
+
+        if (existingBasket.isPresent()) {
+            Basket updatedBasket = existingBasket.get();
+            updatedBasket.setCount(updatedBasket.getCount() + 1);
+            return basketRepository.save(updatedBasket);
+        } else {
+            Basket newBasket = Basket.builder()
+                    .userId(userId)
+                    .productId(productId)
+                    .count(1L)
+                    .user(userEntity.get())
+                    .product(productRepository.findById(productId).orElseThrow(() -> new ExpressionException("Товар не найден")))
+                    .build();
+
+            return basketRepository.save(newBasket);
+        }
     }
 
 }

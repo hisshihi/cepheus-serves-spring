@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Optional;
 
 @RepositoryRestResource(path = "baskets")
 @CrossOrigin(origins = "http://localhost:8081", methods = {RequestMethod.POST, RequestMethod.GET})
 public interface BasketRepository extends JpaRepository<Basket, Long> {
+
+    Optional<Basket> findByUserIdAndProductId(Long userId, Long productId);
 
 }
