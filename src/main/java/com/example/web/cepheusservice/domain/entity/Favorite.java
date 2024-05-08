@@ -29,5 +29,4 @@ public class Favorite {
     @JoinColumn(nullable = false, name = "product_link")
     private ProductEntity product;
 
-//    todo: доделать отображеие товаров
 }
