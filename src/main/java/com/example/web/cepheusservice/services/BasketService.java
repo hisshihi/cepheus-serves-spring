@@ -9,5 +9,4 @@ import java.util.List;
 public interface BasketService {
     Basket save(Basket basket, Principal principal);
 
-    List<Basket> findProduct(Principal principal);
 }

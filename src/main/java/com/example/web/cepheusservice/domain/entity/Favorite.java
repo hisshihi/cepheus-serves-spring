@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +19,15 @@ public class Favorite {
     private Long id;
     private Long userId;
     private Long productId;
+    private Long count;
 
     @ManyToOne
-    private UserEntity user_link;
-    @ManyToOne
-    private ProductEntity product_link;
+    @JoinColumn(nullable = false, name = "user_link")
+    private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "product_link")
+    private ProductEntity product;
+
+//    todo: доделать отображеие товаров
 }

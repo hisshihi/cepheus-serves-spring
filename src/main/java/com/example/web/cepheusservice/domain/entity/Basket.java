@@ -24,11 +24,13 @@ public class Basket {
     private Long userId;
     @Column(nullable = false)
     private Long productId;
+    private Long count;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_link")
     private UserEntity user;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "product_link")
     private ProductEntity product;

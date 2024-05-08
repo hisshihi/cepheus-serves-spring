@@ -11,6 +11,7 @@ import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,9 +29,16 @@ public class FavoriteServiceImpl implements FavoriteService {
         Favorite savedFavorite = Favorite.builder()
                 .userId(findUser.get().getId())
                 .productId(favorite.getProductId())
-                .user_link(userRepository.findById(findUser.get().getId()).orElseThrow(() -> new ExpressionException("Пользователь не найден")))
-                .product_link(productRepository.findById(favorite.getProductId()).orElseThrow(() -> new ExpressionException("Товар не найден")))
+                .user(userRepository.findById(findUser.get().getId()).orElseThrow(() -> new ExpressionException("Пользователь не найден")))
+                .product(productRepository.findById(favorite.getProductId()).orElseThrow(() -> new ExpressionException("Товар не найден")))
                 .build();
         return favoriteRepository.save(savedFavorite);
+    }
+
+    @Override
+    public List<Favorite> findAll(Principal principal) {
+        Optional<UserEntity> user = userRepository.findByEmail(principal.getName());
+
+        return favoriteRepository.findAllProductIdByUserId(user.get().getId());
     }
 }
