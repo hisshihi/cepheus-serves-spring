@@ -9,4 +9,6 @@ public interface FavoriteService {
     Favorite save(Favorite favorite, Principal principal);
 
     List<Favorite> findAll(Principal principal);
+
+    void delete(Long id);
 }

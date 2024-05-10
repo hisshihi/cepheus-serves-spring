@@ -48,4 +48,9 @@ public class FavoriteServiceImpl implements FavoriteService {
         return favoriteRepository.findByUserId(user.get().getId());
     }
 
+    @Override
+    public void delete(Long id) {
+        favoriteRepository.deleteById(id);
+    }
+
 }
