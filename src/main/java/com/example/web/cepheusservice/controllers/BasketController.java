@@ -28,10 +28,10 @@ public class BasketController {
     }
 
 //    Метод определения есть ли товар в коризне или нет
-//    @GetMapping("/basket/in-basket")
-//    private ResponseEntity<List<Basket>> getProductInBasket(Principal principal) {
-//        List<Basket> baskets = basketService.findProduct(principal);
-//        return ResponseEntity.ok(baskets);
-//    }
+    @GetMapping("/basket/in-basket")
+    private ResponseEntity<List<Basket>> getProductInBasket(Principal principal) {
+        List<Basket> baskets = basketService.findProduct(principal);
+        return ResponseEntity.ok(baskets);
+    }
 
 }

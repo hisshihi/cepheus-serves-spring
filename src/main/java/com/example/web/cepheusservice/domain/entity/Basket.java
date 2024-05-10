@@ -32,6 +32,7 @@ public class Basket {
     private UserEntity user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "product_link")
     private ProductEntity product;
 

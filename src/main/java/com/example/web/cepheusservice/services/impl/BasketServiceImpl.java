@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +55,14 @@ public class BasketServiceImpl implements BasketService {
 
             return basketRepository.save(newBasket);
         }
+    }
+
+    @Override
+    @Transactional
+    public List<Basket> findProduct(Principal principal) {
+        Optional<UserEntity> user = userRepository.findByEmail(principal.getName());
+
+        return basketRepository.findByUserId(user.get().getId());
     }
 
 }
