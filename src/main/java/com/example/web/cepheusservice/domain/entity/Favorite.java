@@ -26,6 +26,7 @@ public class Favorite {
     private UserEntity user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(nullable = false, name = "product_link")
     private ProductEntity product;
 

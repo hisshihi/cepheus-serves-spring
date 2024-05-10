@@ -9,6 +9,7 @@ import com.example.web.cepheusservice.services.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
@@ -37,6 +38,14 @@ public class FavoriteServiceImpl implements FavoriteService {
                 .product(productRepository.findById(favorite.getProductId()).orElseThrow(() -> new ExpressionException("Товар не найден")))
                 .build();
         return favoriteRepository.save(savedFavorite);
+    }
+
+    @Override
+    @Transactional
+    public List<Favorite> findAll(Principal principal) {
+        Optional<UserEntity> user = userRepository.findByEmail(principal.getName());
+
+        return favoriteRepository.findByUserId(user.get().getId());
     }
 
 }
