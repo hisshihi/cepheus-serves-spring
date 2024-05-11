@@ -18,4 +18,8 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long>,
     boolean existsByTitle(String title);
 
     Page<ProductEntity> findAllByCategoryEntityId(Long id, Pageable pageable);
+
+    Page<ProductEntity> findByOrderByPriceAsc(Pageable pageable);
+
+    Page<ProductEntity> findByOrderByPriceDesc(Pageable pageable);
 }

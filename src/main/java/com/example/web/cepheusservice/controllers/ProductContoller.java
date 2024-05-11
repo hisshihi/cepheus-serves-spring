@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @MultipartConfig
@@ -218,12 +219,34 @@ public class ProductContoller {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-//    Фильтр по категориям
+    //    Фильтр по категориям
     @GetMapping(path = "/products/filter/category/{id}")
     @Transactional
     public Page<ProductDto> filterByCategory(@PathVariable("id") Long id, Pageable pageable) {
         Page<ProductEntity> products = productService.filterByCategory(id, pageable);
         return new ResponseEntity<>(products.map(productMapper::mapTo), HttpStatus.OK).getBody();
+    }
+
+    //    Фильтр по стандартным категориям
+//    Фильтр по популярным товарам
+    @GetMapping(path = "/products/popular")
+    public Page<ProductDto> filterByPopular(Pageable pageable) {
+        Page<ProductDto> products = productService.findByPopular(pageable);
+        return products;
+    }
+
+    //    Фильтр по возрастанию цены
+    @GetMapping(path = "/products/price/asc")
+    public Page<ProductDto> filterByPriceAsc(Pageable pageable) {
+        Page<ProductDto> products = productService.findAllByPriceAsc(pageable);
+        return products;
+    }
+
+//    Фильтр по убыванию цены
+    @GetMapping(path = "/products/price/desc")
+    public Page<ProductDto> filterByPriceDesc(Pageable pageable) {
+        Page<ProductDto> products = productService.findAllByPriceDesc(pageable);
+        return products;
     }
 
 }

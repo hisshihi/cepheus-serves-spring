@@ -5,6 +5,7 @@ import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.mappers.Mapper;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.services.ProductService;
+import jakarta.transaction.Transactional;
 import org.apache.coyote.BadRequestException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -102,5 +103,27 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductEntity> filterByCategory(Long id, Pageable pageable) {
         return productRepository.findAllByCategoryEntityId(id, pageable);
     }
+
+    @Override
+    @Transactional
+    public Page<ProductDto> findByPopular(Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findByOrderByCountDesc(pageable);
+        return products.map(mapper::mapTo);
+    }
+
+    @Override
+    @Transactional
+    public Page<ProductDto> findAllByPriceAsc(Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findByOrderByPriceAsc(pageable);
+        return products.map(mapper::mapTo);
+    }
+
+    @Override
+    @Transactional
+    public Page<ProductDto> findAllByPriceDesc(Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findByOrderByPriceDesc(pageable);
+        return products.map(mapper::mapTo);
+    }
+
 
 }
