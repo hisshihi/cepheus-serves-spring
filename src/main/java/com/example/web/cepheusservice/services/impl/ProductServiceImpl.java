@@ -125,5 +125,12 @@ public class ProductServiceImpl implements ProductService {
         return products.map(mapper::mapTo);
     }
 
+    @Override
+    @Transactional
+    public Page<ProductDto> findByName(String name, Pageable pageable) {
+        Page<ProductEntity> products = productRepository.findByTitleContainingIgnoreCase(name, pageable);
+        return products.map(mapper::mapTo);
+    }
+
 
 }

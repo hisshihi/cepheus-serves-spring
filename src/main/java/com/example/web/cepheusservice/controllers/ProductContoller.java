@@ -236,16 +236,23 @@ public class ProductContoller {
     }
 
     //    Фильтр по возрастанию цены
-    @GetMapping(path = "/products/price/asc")
+    @GetMapping(path = "/products/asc")
     public Page<ProductDto> filterByPriceAsc(Pageable pageable) {
         Page<ProductDto> products = productService.findAllByPriceAsc(pageable);
         return products;
     }
 
 //    Фильтр по убыванию цены
-    @GetMapping(path = "/products/price/desc")
+    @GetMapping(path = "/products/desc")
     public Page<ProductDto> filterByPriceDesc(Pageable pageable) {
         Page<ProductDto> products = productService.findAllByPriceDesc(pageable);
+        return products;
+    }
+
+//    Фильтр по названию
+    @GetMapping(path = "/products/name/{name}")
+    public Page<ProductDto> findByName(@PathVariable String name, Pageable pageable) {
+        Page<ProductDto> products = productService.findByName(name, pageable);
         return products;
     }
 

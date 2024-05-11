@@ -39,12 +39,14 @@ public interface ProductService {
 
     Page<ProductEntity> filterByCategory(Long id, Pageable pageable);
 
-    @Cacheable(value = "products", key = "#pageable")
+//    @Cacheable(value = "products", key = "#pageable")
     Page<ProductDto> findByPopular(Pageable pageable);
 
-    @Cacheable(value = "products", key = "#pageable")
+//    @Cacheable(value = "products", key = "#pageable")
     Page<ProductDto> findAllByPriceAsc(Pageable pageable);
 
-    @Cacheable(value = "products", key = "#pageable")
+//    @Cacheable(value = "products", key = "#pageable")
     Page<ProductDto> findAllByPriceDesc(Pageable pageable);
+
+    Page<ProductDto> findByName(String name, Pageable pageable);
 }

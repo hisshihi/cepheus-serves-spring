@@ -22,4 +22,6 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long>,
     Page<ProductEntity> findByOrderByPriceAsc(Pageable pageable);
 
     Page<ProductEntity> findByOrderByPriceDesc(Pageable pageable);
+
+    Page<ProductEntity> findByTitleContainingIgnoreCase(String name, Pageable pageable);
 }
