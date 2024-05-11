@@ -219,7 +219,7 @@ public class ProductContoller {
     }
 
 //    Фильтр по категориям
-    @GetMapping(path = "/porducts/filter/category/{id}")
+    @GetMapping(path = "/products/filter/category/{id}")
     @Transactional
     public Page<ProductDto> filterByCategory(@PathVariable("id") Long id, Pageable pageable) {
         Page<ProductEntity> products = productService.filterByCategory(id, pageable);

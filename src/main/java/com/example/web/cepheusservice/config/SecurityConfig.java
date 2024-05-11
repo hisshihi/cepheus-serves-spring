@@ -35,9 +35,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/", "/register", "/authenticate", "/products") // Главная страница, страница авторизации и регистрации
                 .permitAll()
-                .requestMatchers(HttpMethod.GET, "/products/{id}")
+                .requestMatchers(HttpMethod.GET, "/products/**")
                 .permitAll()
-                .requestMatchers(HttpMethod.GET, "/reviews", "/slider")
+                .requestMatchers(HttpMethod.GET, "/reviews", "/slider", "/category")
                 .permitAll()
                 .requestMatchers("slider").hasAuthority("ADMIN")
                 .anyRequest()
