@@ -1,15 +1,10 @@
 package com.example.web.cepheusservice.controllers;
 
-import com.example.web.cepheusservice.auth.AuthenticationRequest;
-import com.example.web.cepheusservice.auth.AuthenticationResponse;
-import com.example.web.cepheusservice.domain.dto.ProductDto;
 import com.example.web.cepheusservice.domain.dto.UserDto;
-import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.domain.entity.UserEntity;
 import com.example.web.cepheusservice.mappers.Mapper;
 import com.example.web.cepheusservice.services.JwtService;
 import com.example.web.cepheusservice.services.UserServise;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,14 +33,14 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-//    Получаения всех пользователей
+    //    Получаения всех пользователей
     @GetMapping(path = "/users")
     public List<UserDto> listUsers() {
         List<UserEntity> userEntityList = userServise.findAll();
         return userEntityList.stream().map(mapper::mapTo).collect(Collectors.toList());
     }
 
-//    Поиск пользователя по id
+    //    Поиск пользователя по id
     @GetMapping(path = "/users/{id}")
     public ResponseEntity<UserDto> findUser(@PathVariable("id") Long id) {
         Optional<UserEntity> findUser = userServise.findUserById(id);
@@ -55,7 +50,7 @@ public class UserController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-// Обновление роли пользователя
+    // Обновление роли пользователя
     @PatchMapping(path = "/users/{id}")
     public ResponseEntity<UserDto> variableUpdateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
         boolean userExists = userServise.isExists(id);
@@ -67,7 +62,7 @@ public class UserController {
     }
 
 
-//    Удаление пользователя
+    //    Удаление пользователя
     @DeleteMapping(path = "/users/{id}")
     public ResponseEntity<UserEntity> deleteUser(@PathVariable("id") Long id) {
         Optional<UserEntity> user = userServise.findUserById(id);
