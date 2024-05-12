@@ -26,6 +26,7 @@ public class UserDto {
     private String orgAddress;
     private long orgINN;
     private String token;
+    private String password;
 
     private Role role;
 

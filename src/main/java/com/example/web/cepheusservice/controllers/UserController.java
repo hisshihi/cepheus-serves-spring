@@ -7,9 +7,11 @@ import com.example.web.cepheusservice.services.JwtService;
 import com.example.web.cepheusservice.services.UserServise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,6 +72,22 @@ public class UserController {
         System.out.println(user.get());
         userServise.delete(id);
         return new ResponseEntity(user.get().getToken(), HttpStatus.OK);
+    }
+
+//    Обновиление данных польователя
+    @PatchMapping(path = "/users/editing")
+    public ResponseEntity<String> pathVariableAllUserData(Principal principal, @RequestBody UserDto userDto) {
+
+        UserEntity findUser = userServise.findUserByEmail(principal.getName());
+
+        System.out.println(findUser);
+
+        boolean userExists = userServise.isExists(findUser.getId());
+        if (!userExists) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        UserEntity user = mapper.mapFrom(userDto);
+        userServise.partialUpdateAllDataUser(findUser.getId(), user);
+        return ResponseEntity.ok().build();
     }
 
 }
