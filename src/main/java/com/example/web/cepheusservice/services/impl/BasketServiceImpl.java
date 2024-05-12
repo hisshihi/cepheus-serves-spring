@@ -8,6 +8,7 @@ import com.example.web.cepheusservice.repositories.UserRepository;
 import com.example.web.cepheusservice.services.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.ExpressionException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,21 +73,23 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     @Transactional
-    public void decreaseCount(Principal principal, Long id) {
-        Optional<UserEntity> userEntity = userRepository.findByEmail(principal.getName());
+    public void decreaseCount(Principal principal, Long basketId) {
+        UserEntity userEntity = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new ExpressionException("Пользователь не найден"));
 
-        if (!userEntity.isPresent()) {
-            throw new ExpressionException("Пользователь не найден");
+        Basket basket = basketRepository.findById(basketId)
+                .orElseThrow(() -> new ExpressionException("Корзина не найдена"));
+
+        // Проверяем, принадлежит ли корзина текущему пользователю
+        if (!basket.getUserId().equals(userEntity.getId())) {
+            throw new AccessDeniedException("Доступ запрещен");
         }
-
-        Long userId = userEntity.get().getId();
-        Basket basket = basketRepository.findById(id).orElseThrow(() -> new ExpressionException("Корзина не найдена"));
 
         if (basket.getCount() > 1) {
             basket.setCount(basket.getCount() - 1);
             basketRepository.save(basket);
         } else {
-            delete(id);
+            basketRepository.deleteById(basketId);
         }
     }
 
