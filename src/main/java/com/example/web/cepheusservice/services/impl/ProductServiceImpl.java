@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductDto> findTop12ByOrderByCountDesc(Pageable pageable) {
 //        return StreamSupport.stream(productRepository.findTop12ByOrderByCountDesc().spliterator(), false).collect(Collectors.toList());
-        Page<ProductEntity> products = productRepository.findByOrderByCountDesc(pageable);
+        Page<ProductEntity> products = productRepository.findByOrderByCountSalesDesc(pageable);
         return products.map(mapper::mapTo);
 
 //        return productRepository.findByOrderByCountDesc(pageable);
@@ -107,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Page<ProductDto> findByPopular(Pageable pageable) {
-        Page<ProductEntity> products = productRepository.findByOrderByCountDesc(pageable);
+        Page<ProductEntity> products = productRepository.findByOrderByCountSalesDesc(pageable);
         return products.map(mapper::mapTo);
     }
 

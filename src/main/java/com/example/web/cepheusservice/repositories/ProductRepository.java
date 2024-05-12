@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends CrudRepository<ProductEntity, Long>,
         PagingAndSortingRepository<ProductEntity, Long> {
 
-    Page<ProductEntity> findByOrderByCountDesc(Pageable pageable);
+    Page<ProductEntity> findByOrderByCountSalesDesc(Pageable pageable);
 
 //    @Query("select p from ProductEntity p where p.title = ?1")
     boolean existsByTitle(String title);
