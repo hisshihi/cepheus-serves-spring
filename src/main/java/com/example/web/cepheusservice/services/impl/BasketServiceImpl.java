@@ -65,4 +65,9 @@ public class BasketServiceImpl implements BasketService {
         return basketRepository.findByUserId(user.get().getId());
     }
 
+    @Override
+    public void delete(Long id) {
+        basketRepository.deleteById(id);
+    }
+
 }
