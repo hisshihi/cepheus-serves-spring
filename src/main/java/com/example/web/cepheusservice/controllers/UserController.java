@@ -43,9 +43,12 @@ public class UserController {
     }
 
     //    Поиск пользователя по id
-    @GetMapping(path = "/users/{id}")
-    public ResponseEntity<UserDto> findUser(@PathVariable("id") Long id) {
-        Optional<UserEntity> findUser = userServise.findUserById(id);
+    @GetMapping(path = "/users/name")
+    public ResponseEntity<UserDto> findUser(Principal principal) {
+
+        UserEntity userId = userServise.findUserByEmail(principal.getName());
+
+        Optional<UserEntity> findUser = userServise.findUserById(userId.getId());
         return findUser.map(userEntity -> {
             UserDto userDto = mapper.mapTo(userEntity);
             return new ResponseEntity<>(userDto, HttpStatus.OK);
