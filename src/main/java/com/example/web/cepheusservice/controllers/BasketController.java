@@ -40,4 +40,10 @@ public class BasketController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/basket/decrease/{id}")
+    public ResponseEntity<String> decreaseProductCount(@PathVariable Long id, Principal principal) {
+        basketService.decreaseCount(principal, id);
+        return ResponseEntity.ok().build();
+    }
+
 }

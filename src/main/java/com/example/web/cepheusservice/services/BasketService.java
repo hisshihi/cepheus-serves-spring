@@ -12,4 +12,6 @@ public interface BasketService {
     List<Basket> findProduct(Principal principal);
 
     void delete(Long id);
+
+    void decreaseCount(Principal principal, Long id);
 }

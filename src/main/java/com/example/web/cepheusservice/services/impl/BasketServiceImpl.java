@@ -70,4 +70,24 @@ public class BasketServiceImpl implements BasketService {
         basketRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional
+    public void decreaseCount(Principal principal, Long id) {
+        Optional<UserEntity> userEntity = userRepository.findByEmail(principal.getName());
+
+        if (!userEntity.isPresent()) {
+            throw new ExpressionException("Пользователь не найден");
+        }
+
+        Long userId = userEntity.get().getId();
+        Basket basket = basketRepository.findById(id).orElseThrow(() -> new ExpressionException("Корзина не найдена"));
+
+        if (basket.getCount() > 1) {
+            basket.setCount(basket.getCount() - 1);
+            basketRepository.save(basket);
+        } else {
+            delete(id);
+        }
+    }
+
 }
