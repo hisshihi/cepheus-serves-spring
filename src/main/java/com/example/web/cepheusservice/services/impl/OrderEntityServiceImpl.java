@@ -4,15 +4,13 @@ import com.example.web.cepheusservice.domain.entity.OrderEntity;
 import com.example.web.cepheusservice.domain.entity.OrderProduct;
 import com.example.web.cepheusservice.domain.entity.ProductEntity;
 import com.example.web.cepheusservice.domain.entity.UserEntity;
+import com.example.web.cepheusservice.repositories.BasketRepository;
 import com.example.web.cepheusservice.repositories.OrderEntityRepository;
 import com.example.web.cepheusservice.repositories.ProductRepository;
 import com.example.web.cepheusservice.repositories.UserRepository;
 import com.example.web.cepheusservice.services.OrderEntityService;
-import com.example.web.cepheusservice.services.ProductService;
-import com.example.web.cepheusservice.services.UserServise;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +26,7 @@ public class OrderEntityServiceImpl implements OrderEntityService {
     private final OrderEntityRepository orderEntityRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final BasketRepository basketRepository;
 
 
     @Override
@@ -60,12 +59,18 @@ public class OrderEntityServiceImpl implements OrderEntityService {
             newOrderProduct.setProduct(dbProduct);
             newOrderProduct.setProductCounts(orderProduct.getProductCounts());
 
+            dbProduct.setCount(dbProduct.getCount() - orderProduct.getProductCounts());
+            dbProduct.setCountSales(dbProduct.getCountSales() + orderProduct.getProductCounts());
+
             // Добавляем к списку продуктов в заказе
             orderProducts.add(newOrderProduct);
         }
 
         // Присваиваем обновленный список продуктов заказу
         order.setOrderProducts(orderProducts);
+
+//        Удаляем все товары из корзины
+        basketRepository.deleteAll();
 
         // Сохраняем заказ
         return orderEntityRepository.save(order);
