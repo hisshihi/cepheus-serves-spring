@@ -1,9 +1,6 @@
 package com.example.web.cepheusservice.services.impl;
 
-import com.example.web.cepheusservice.domain.entity.OrderEntity;
-import com.example.web.cepheusservice.domain.entity.OrderProduct;
-import com.example.web.cepheusservice.domain.entity.ProductEntity;
-import com.example.web.cepheusservice.domain.entity.UserEntity;
+import com.example.web.cepheusservice.domain.entity.*;
 import com.example.web.cepheusservice.repositories.BasketRepository;
 import com.example.web.cepheusservice.repositories.OrderEntityRepository;
 import com.example.web.cepheusservice.repositories.ProductRepository;
@@ -43,6 +40,7 @@ public class OrderEntityServiceImpl implements OrderEntityService {
         order.setDeliveryMethod(order.getDeliveryMethod());
         order.setAllCountProduct(order.getAllCountProduct());
         order.setAllPrice(order.getAllPrice());
+        order.setStatuses(Statuses.PENDING);
 
         // Очищаем текущий список продуктов в заказе
         List<OrderProduct> orderProducts = new ArrayList<>();

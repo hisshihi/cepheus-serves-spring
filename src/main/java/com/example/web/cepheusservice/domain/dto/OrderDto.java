@@ -1,5 +1,6 @@
 package com.example.web.cepheusservice.domain.dto;
 
+import com.example.web.cepheusservice.domain.entity.Statuses;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,6 @@ public class OrderDto {
     private String deliveryMethod;
     private Long allCountProduct;
     private String allPrice;
+    private Statuses statuses;
 
 }

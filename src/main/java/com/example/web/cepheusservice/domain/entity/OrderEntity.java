@@ -36,6 +36,7 @@ public class OrderEntity {
     private String deliveryMethod;
     private Long allCountProduct;
     private String allPrice;
+    private Statuses statuses;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
