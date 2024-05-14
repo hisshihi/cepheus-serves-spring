@@ -10,5 +10,5 @@ public interface FavoriteService {
 
     List<Favorite> findAll(Principal principal);
 
-    void delete(Long id);
+    void delete(Long id, Principal principal);
 }

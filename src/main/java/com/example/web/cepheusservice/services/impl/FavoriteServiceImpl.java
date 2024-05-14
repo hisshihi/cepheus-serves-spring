@@ -49,8 +49,11 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public void delete(Long id) {
-        favoriteRepository.deleteById(id);
+    @Transactional
+    public void delete(Long id, Principal principal) {
+        Optional<UserEntity> findUser = userRepository.findByEmail(principal.getName());
+        Optional<Favorite> favorite = favoriteRepository.findByUserIdAndProductId(findUser.get().getId(), id);
+        favoriteRepository.deleteById(favorite.get().getId());
     }
 
 }

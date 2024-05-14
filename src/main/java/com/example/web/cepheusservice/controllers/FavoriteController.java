@@ -33,8 +33,8 @@ public class FavoriteController {
     }
 
     @DeleteMapping(path = "/{id}")
-    private ResponseEntity<String> delete(@PathVariable Long id) {
-        favoriteService.delete(id);
+    private ResponseEntity<String> delete(@PathVariable("id") Long id, Principal principal) {
+        favoriteService.delete(id, principal);
         return ResponseEntity.noContent().build();
     }
 
