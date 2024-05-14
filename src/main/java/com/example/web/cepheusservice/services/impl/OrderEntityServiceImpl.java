@@ -77,4 +77,9 @@ public class OrderEntityServiceImpl implements OrderEntityService {
         // Сохраняем заказ
         return orderEntityRepository.save(order);
     }
+
+    @Override
+    public List<OrderEntity> findOrderEntityByUserId(Long id) {
+        return orderEntityRepository.findByUserId(id);
+    }
 }
