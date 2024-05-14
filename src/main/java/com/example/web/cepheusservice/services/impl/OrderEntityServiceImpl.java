@@ -91,4 +91,9 @@ public class OrderEntityServiceImpl implements OrderEntityService {
             return orderEntityRepository.save(existingOrder);
         }).orElseThrow(() -> new RuntimeException("Заказ не найден"));
     }
+
+    @Override
+    public List<OrderEntity> findALl() {
+        return orderEntityRepository.findAll();
+    }
 }

@@ -12,4 +12,6 @@ public interface OrderEntityService {
     List<OrderEntity> findOrderEntityByUserId(Long id);
 
     void update(Long id, OrderEntity order);
+
+    List<OrderEntity> findALl();
 }

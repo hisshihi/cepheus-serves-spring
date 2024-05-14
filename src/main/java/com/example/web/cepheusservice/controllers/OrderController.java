@@ -46,6 +46,12 @@ public class OrderController {
         return orderEntities.stream().map(orderMapper::mapTo).collect(Collectors.toList());
     }
 
+    @GetMapping(path = "/all")
+    private List<OrderDto> getAllOrderEntity() {
+        List<OrderEntity> orderEntities = orderEntityService.findALl();
+        return orderEntities.stream().map(orderMapper::mapTo).collect(Collectors.toList());
+    }
+
     @GetMapping(path = "/product/{id}")
     private List<OrderProductDto> getOrderProduct(@PathVariable Long id) {
         List<OrderProduct> orderProducts = orderProductService.findAllById(id);
