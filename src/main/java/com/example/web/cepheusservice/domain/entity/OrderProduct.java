@@ -26,6 +26,8 @@ public class OrderProduct {
     @JoinColumn(name = "prodict_id")
     private ProductEntity product;
 
+    private Long productEntityId;
+
     private int productCounts;
 
 }

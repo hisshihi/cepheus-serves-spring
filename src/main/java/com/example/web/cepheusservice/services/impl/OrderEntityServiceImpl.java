@@ -59,6 +59,8 @@ public class OrderEntityServiceImpl implements OrderEntityService {
             newOrderProduct.setProduct(dbProduct);
             newOrderProduct.setProductCounts(orderProduct.getProductCounts());
 
+            newOrderProduct.setProductEntityId(dbProduct.getId());
+
             dbProduct.setCount(dbProduct.getCount() - orderProduct.getProductCounts());
             dbProduct.setCountSales(dbProduct.getCountSales() + orderProduct.getProductCounts());
 
