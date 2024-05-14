@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -80,5 +81,14 @@ public class OrderEntityServiceImpl implements OrderEntityService {
     @Override
     public List<OrderEntity> findOrderEntityByUserId(Long id) {
         return orderEntityRepository.findByUserId(id);
+    }
+
+    @Override
+    public void update(Long id, OrderEntity order) {
+        order.setId(id);
+        orderEntityRepository.findById(id).map(existingOrder -> {
+            Optional.ofNullable(order.getStatuses()).ifPresent(existingOrder::setStatuses);
+            return orderEntityRepository.save(existingOrder);
+        }).orElseThrow(() -> new RuntimeException("Заказ не найден"));
     }
 }

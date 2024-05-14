@@ -10,4 +10,6 @@ public interface OrderEntityService {
     OrderEntity saveOrder(OrderEntity order, Principal principal);
 
     List<OrderEntity> findOrderEntityByUserId(Long id);
+
+    void update(Long id, OrderEntity order);
 }

@@ -53,4 +53,10 @@ public class OrderController {
         return orderProducts.stream().map(orderProductMapper::mapTo).collect(Collectors.toList());
     }
 
+    @PatchMapping(path = "/{id}")
+    private ResponseEntity<String> updateStatus(@PathVariable("id") Long id, @RequestBody OrderEntity order) {
+        orderEntityService.update(id, order);
+        return ResponseEntity.ok().build();
+    }
+
 }
