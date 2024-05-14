@@ -1,9 +1,5 @@
 package com.example.web.cepheusservice.domain.dto;
 
-import com.example.web.cepheusservice.domain.entity.OrderEntity;
-import com.example.web.cepheusservice.domain.entity.ProductEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +16,7 @@ public class OrderProductDto {
     private Long productEntityId;
 
     private int productCounts;
+    private String productTitleImpl;
 
 //    private OrderDto orderDto;
 

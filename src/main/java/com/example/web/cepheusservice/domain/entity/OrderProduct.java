@@ -31,6 +31,8 @@ public class OrderProduct {
 
     private Long productEntityId;
 
+    private String productTitleImpl;
+
     private int productCounts;
 
 }
