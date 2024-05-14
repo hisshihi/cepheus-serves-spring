@@ -1,6 +1,5 @@
 package com.example.web.cepheusservice.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,15 +20,11 @@ public class OrderProduct {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    @JsonIgnore
     private OrderEntity order;
 
     @ManyToOne
     @JoinColumn(name = "prodict_id")
-    @JsonIgnore
     private ProductEntity product;
-
-    private Long productEntityId;
 
     private int productCounts;
 

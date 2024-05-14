@@ -1,6 +1,5 @@
 package com.example.web.cepheusservice.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,12 +23,10 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private UserEntity user;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "products_id")
-    @JsonIgnore
     private List<ProductEntity> product;
 
 //    private Long productCounts;
@@ -41,7 +38,6 @@ public class OrderEntity {
     private String allPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
 }
