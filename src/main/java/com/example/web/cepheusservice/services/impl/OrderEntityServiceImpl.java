@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -59,6 +61,8 @@ public class OrderEntityServiceImpl implements OrderEntityService {
             newOrderProduct.setProduct(dbProduct);
             newOrderProduct.setProductCounts(orderProduct.getProductCounts());
 
+            newOrderProduct.setProductEntityId(dbProduct.getId());
+
             dbProduct.setCount(dbProduct.getCount() - orderProduct.getProductCounts());
             dbProduct.setCountSales(dbProduct.getCountSales() + orderProduct.getProductCounts());
 
@@ -74,5 +78,11 @@ public class OrderEntityServiceImpl implements OrderEntityService {
 
         // Сохраняем заказ
         return orderEntityRepository.save(order);
+    }
+
+    @Override
+    @Transactional
+    public List<OrderEntity> findOrderByUserId(Optional<UserEntity> findUser) {
+        return orderEntityRepository.findByUserId(findUser.get().getId());
     }
 }
