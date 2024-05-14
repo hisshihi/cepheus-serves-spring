@@ -4,6 +4,8 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5432/postgres
     driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: false
   jpa:
     hibernate:
       ddl-auto: update

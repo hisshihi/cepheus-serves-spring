@@ -4,6 +4,8 @@ spring:
     password: qWqNtEyfeZfPYusWDSQNhdAJNostTfcL
     url: jdbc:postgresql://roundhouse.proxy.rlwy.net:57940/railway
     driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: false
   jpa:
     hibernate:
       ddl-auto: update
