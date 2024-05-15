@@ -24,6 +24,9 @@ public class OrderDto {
     private Long allCountProduct;
     private String allPrice;
     private Statuses statuses;
+    private String userEmailImpl;
+    private String userFirstNameImpl;
+    private String userLastNameImpl;
     private List<OrderProductDto> orderProductDto;
 
 }

@@ -34,6 +34,9 @@ public class OrderEntityServiceImpl implements OrderEntityService {
         UserEntity user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         order.setUser(user);
+        order.setUserEmailImpl(user.getEmail());
+        order.setUserFirstNameImpl(user.getFirstname());
+        order.setUserLastNameImpl(user.getLastname());
 
         // Устанавливаем основные данные заказа
         order.setCity(order.getCity());
