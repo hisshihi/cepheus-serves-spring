@@ -29,7 +29,7 @@ public class ProductRepositoryTest {
         underTest.save(productEntityB);
         Pageable pageable = PageRequest.of(0, 2);
 //        when
-        Page<ProductEntity> products = underTest.findByOrderByCountDesc(pageable);
+        Page<ProductEntity> products = underTest.findByOrderByCountSalesDesc(pageable);
 //        then
         assertThat(products.getContent().get(0)).isEqualTo(productEntityB);
     }
