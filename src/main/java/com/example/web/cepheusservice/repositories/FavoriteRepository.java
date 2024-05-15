@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RepositoryRestResource(path = "favorites")
-@CrossOrigin(origins = "http://localhost:8081", methods = {RequestMethod.POST, RequestMethod.GET})
+@CrossOrigin(origins = "https://cepheus-cervice.netlify.app", methods = {RequestMethod.POST, RequestMethod.GET})
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
     Optional<Favorite> findByUserIdAndProductId(Long userId, Long productId);
