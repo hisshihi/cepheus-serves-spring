@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RepositoryRestResource(path = "baskets")
-@CrossOrigin(origins = "https://cepheus-cervice.netlify.app", methods = {RequestMethod.POST, RequestMethod.GET})
+@CrossOrigin(origins = "https://cepheus-service.netlify.app", methods = {RequestMethod.POST, RequestMethod.GET})
 public interface BasketRepository extends JpaRepository<Basket, Long> {
 
     Optional<Basket> findByUserIdAndProductId(Long userId, Long productId);
