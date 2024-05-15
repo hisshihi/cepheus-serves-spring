@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: postgres
-    password: NtwBKYNzDdIaYJZcWzfbrQiRfXGkJoJG
-    url: jdbc:postgresql://roundhouse.proxy.rlwy.net:27054/railway
+    password: vucHtvtUNqWZVEOBzXRnVLJpqLuJjSom
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:46732/railway
     driver-class-name: org.postgresql.Driver
     hikari:
       auto-commit: false
