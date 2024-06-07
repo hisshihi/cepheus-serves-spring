@@ -62,7 +62,6 @@ public class BasketServiceImpl implements BasketService {
     @Transactional
     public List<Basket> findProduct(Principal principal) {
         Optional<UserEntity> user = userRepository.findByEmail(principal.getName());
-
         return basketRepository.findByUserId(user.get().getId());
     }
 

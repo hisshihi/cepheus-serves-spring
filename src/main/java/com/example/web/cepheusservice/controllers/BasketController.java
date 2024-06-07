@@ -4,7 +4,6 @@ import com.example.web.cepheusservice.domain.entity.Basket;
 import com.example.web.cepheusservice.services.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -27,7 +26,7 @@ public class BasketController {
         return ResponseEntity.created(location).build();
     }
 
-//    Метод определения есть ли товар в коризне или нет
+    //    Метод определения есть ли товар в коризне или нет
     @GetMapping("/basket/in-basket")
     private ResponseEntity<List<Basket>> getProductInBasket(Principal principal) {
         List<Basket> baskets = basketService.findProduct(principal);
