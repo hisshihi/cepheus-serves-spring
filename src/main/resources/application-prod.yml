@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: postgres
-    password: vucHtvtUNqWZVEOBzXRnVLJpqLuJjSom
-    url: jdbc:postgresql://viaduct.proxy.rlwy.net:46732/railway
+    password: OkGvtzqdtuXZoeQFZgfVnfpDZOqGAlPs
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:58344/railway
     driver-class-name: org.postgresql.Driver
     hikari:
       auto-commit: false
@@ -21,7 +21,7 @@ spring:
       max-request-size: 2MB
   graphql:
     cors:
-      allowed-origins: http://localhost:8081
+      allowed-origins: https://cepheus-service.ru
 
 web:
   cepheusservice:
