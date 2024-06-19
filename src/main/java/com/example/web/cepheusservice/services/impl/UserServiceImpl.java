@@ -98,5 +98,11 @@ public class UserServiceImpl implements UserServise {
         userRepository.save(updatedUser);
     }
 
+    @Override
+    public List<UserEntity> findAllByEamil(String email) {
+        List<UserEntity> users = userRepository.findByEmailContainingIgnoreCase(email);
+        return users;
+    }
+
 
 }

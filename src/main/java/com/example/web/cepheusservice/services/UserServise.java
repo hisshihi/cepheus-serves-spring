@@ -23,4 +23,6 @@ public interface UserServise {
     void save(UserEntity user);
 
     void partialUpdateAllDataUser(Long id, UserEntity user);
+
+    List<UserEntity> findAllByEamil(String email);
 }

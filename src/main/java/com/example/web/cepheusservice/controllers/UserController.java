@@ -93,4 +93,11 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+//    Поиск пользователя по email
+    @GetMapping(path = "/user/{email}")
+    public ResponseEntity<List<UserEntity>> getUserListByEmail(@PathVariable String email) {
+        List<UserEntity> user = userServise.findAllByEamil(email);
+        return ResponseEntity.ok(user);
+    }
+
 }
